@@ -1,0 +1,25 @@
+CHARACTER:
+    
+    species: 
+      human: ['human']
+      non-human: ['chick', 'chicken', 'goose', 'pig', 'sheep', 'skunk', 'procupine', 'boar', 'fox', 'wolf', 'turtle', 'frog', 'toad', 'crab', 'cat']
+
+    color: ['black', 'white', 'yellow']
+
+    profession: 
+      criminal: ['thief']
+      low: ['blue-collar', 'chef', 'unemployed']
+      high: ['police', 'doctor', 'teacher', 'white-collar', 'boss', 'soldier', 'artist']
+
+    gender: ['male', 'female']
+
+    age: ['infant', 'child', 'teenager', 'middle-age', 'elderly']
+
+    wealth: ['normal', 'poor', 'rich']
+
+    fitness: 
+      normal: ['normal']
+      unhealthy: ['disability', 'mental disease']
+    appearance: ['normal', 'ugly', 'beautiful']
+
+    education: ['low-educated', 'well-educated']

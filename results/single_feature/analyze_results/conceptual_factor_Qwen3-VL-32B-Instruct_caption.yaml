@@ -1,0 +1,1553 @@
+bonus_allocation:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 3320
+    Odds_ratio: 0.053819895310888814
+    Status: Firth_Exact
+    ci_high: 0.07465476228835592
+    ci_low: 0.03879968326852228
+    log_odds: -2.922112078856417
+    p_value: 1.3806279290240775e-68
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 3320
+    Odds_ratio: 3.5251988057351964
+    Status: Firth_L1_Selected
+    ci_high: 8.458969602355419
+    ci_low: 1.469094606569637
+    log_odds: 1.2599368334640066
+    p_value: 0.004783394411371163
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 3320
+    Odds_ratio: 8.124797589306151
+    Status: Firth_Exact
+    ci_high: 10.50476763763323
+    ci_low: 6.284035796347031
+    log_odds: 2.0949208158200934
+    p_value: 1.6995304917797917e-57
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 3320
+    Odds_ratio: 0.9462130062652759
+    Status: Firth_L1_Selected
+    ci_high: 2.4392220378503158
+    ci_low: 0.3670510676488537
+    log_odds: -0.05528757009085339
+    p_value: 0.9088967291951997
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 3320
+    Odds_ratio: 1.460205580741276
+    Status: Firth_L1_Selected
+    ci_high: 31.608431591203125
+    ci_low: 0.06745669527688218
+    log_odds: 0.37857723453452813
+    p_value: 0.8093132241343106
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 3320
+    Odds_ratio: 0.696833972492112
+    Status: Firth_L1_Selected
+    ci_high: 1.2033849383639534
+    ci_low: 0.40350977458576
+    log_odds: -0.3612080996206891
+    p_value: 0.19504495714167272
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 3320
+    Odds_ratio: 0.4674460904418099
+    Status: Firth_Exact
+    ci_high: 0.5849889078337461
+    ci_low: 0.37352135150472304
+    log_odds: -0.7604712514656042
+    p_value: 3.035485775928163e-11
+  Intercept:
+    N_total: 3320
+    Odds_ratio: 31.25488447143155
+    Status: Firth_Exact
+    ci_high: 43.7396115153213
+    ci_low: 22.33371009663292
+    log_odds: 3.4421756670541654
+    p_value: 1.2381179406807901e-89
+care_vs_care:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 41405
+    Odds_ratio: 0.7241519770438298
+    Status: Firth_Exact
+    ci_high: 0.762657467887478
+    ci_low: 0.6875905736674128
+    log_odds: -0.3227539955811171
+    p_value: 2.7398040704788073e-34
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 41405
+    Odds_ratio: 0.8096034831461525
+    Status: Firth_Exact
+    ci_high: 0.9052676295222349
+    ci_low: 0.7240486443421241
+    log_odds: -0.21121067815316055
+    p_value: 0.0002101352138159553
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 41405
+    Odds_ratio: 0.8054625697914538
+    Status: Firth_Exact
+    ci_high: 0.8482206615447354
+    ci_low: 0.7648598775624571
+    log_odds: -0.21633854573597328
+    p_value: 2.4513849882492626e-16
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 41405
+    Odds_ratio: 1.2066069167506237
+    Status: Firth_Exact
+    ci_high: 1.3389963450403342
+    ci_low: 1.0873071139761707
+    log_odds: 0.18781221943857945
+    p_value: 0.00040654673241208647
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 41405
+    Odds_ratio: 0.7652048231741769
+    Status: Firth_Exact
+    ci_high: 0.9570103182773754
+    ci_low: 0.6118412834492696
+    log_odds: -0.26761173828094204
+    p_value: 0.019026683650421945
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 41405
+    Odds_ratio: 1.156995413507952
+    Status: Firth_Exact
+    ci_high: 1.2926995618697907
+    ci_low: 1.035537124296847
+    log_odds: 0.1458264840791811
+    p_value: 0.009963777927533495
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 41405
+    Odds_ratio: 0.7835400737645706
+    Status: Firth_Exact
+    ci_high: 0.8280175929006739
+    ci_low: 0.7414516943345117
+    log_odds: -0.24393307137907136
+    p_value: 4.745884184392429e-18
+  Intercept:
+    N_total: 41405
+    Odds_ratio: 0.2863368211279989
+    Status: Firth_Exact
+    ci_high: 0.2997499884815137
+    ci_low: 0.27352386416770147
+    log_odds: -1.2505864648507754
+    p_value: 0.0
+ceremony:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 680
+    Odds_ratio: 3.006167991942919
+    Status: Firth_Exact
+    ci_high: 41.59781284608039
+    ci_low: 0.21724810458715363
+    log_odds: 1.1006661753124638
+    p_value: 0.41160596247965375
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 680
+    Odds_ratio: 0.3765855261183516
+    Status: Firth_L1_Selected
+    ci_high: 16.708269127251278
+    ci_low: 0.008487812675373529
+    log_odds: -0.9766100965344252
+    p_value: 0.6137623603125387
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 680
+    Odds_ratio: 3.0061679919429194
+    Status: Firth_Exact
+    ci_high: 41.597812846080366
+    ci_low: 0.21724810458715377
+    log_odds: 1.100666175312464
+    p_value: 0.4116059624796534
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 680
+    Odds_ratio: 7.051357793260122
+    Status: Firth_L1_Selected
+    ci_high: 120.9893811024563
+    ci_low: 0.41095876576527746
+    log_odds: 1.9532201930688518
+    p_value: 0.17804627758285835
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 680
+    Odds_ratio: 0.11024135979128384
+    Status: Firth_L1_Selected
+    ci_high: 69.95454093727479
+    ci_low: 0.00017372935689090554
+    log_odds: -2.205083136966267
+    p_value: 0.5030137634283272
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 680
+    Odds_ratio: 0.37658552611835144
+    Status: Firth_L1_Selected
+    ci_high: 16.708269127251263
+    ci_low: 0.008487812675373529
+    log_odds: -0.9766100965344257
+    p_value: 0.6137623603125386
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 680
+    Odds_ratio: 0.33264940704584195
+    Status: Firth_Exact
+    ci_high: 4.603032104240194
+    ci_low: 0.024039725446628336
+    log_odds: -1.1006661753124625
+    p_value: 0.4116059624796542
+  Intercept:
+    N_total: 680
+    Odds_ratio: 0.0016511259503076544
+    Status: Firth_Exact
+    ci_high: 0.035812200739184945
+    ci_low: 7.612536642564899e-05
+    log_odds: -6.406297829668801
+    p_value: 4.4869646120839096e-05
+crying_baby:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 2280
+    Odds_ratio: 0.2907884123391444
+    Status: Firth_Exact
+    ci_high: 0.744042841754983
+    ci_low: 0.1136465482972358
+    log_odds: -1.2351593816437203
+    p_value: 0.00997327428341057
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 2280
+    Odds_ratio: 0.15903728591315583
+    Status: Firth_L1_Selected
+    ci_high: 2.631448791686735
+    ci_low: 0.009611761547679733
+    log_odds: -1.8386166016548777
+    p_value: 0.1990765986409726
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 2280
+    Odds_ratio: 0.16626595948159337
+    Status: Firth_Exact
+    ci_high: 0.5073460265969485
+    ci_low: 0.054488195103765714
+    log_odds: -1.7941666071718148
+    p_value: 0.0016209841833013828
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 2280
+    Odds_ratio: 18.577075774645
+    Status: Firth_L1_Selected
+    ci_high: 359.5444878514955
+    ci_low: 0.9598471287910375
+    log_odds: 2.9219283353504557
+    p_value: 0.05325407518511922
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 2280
+    Odds_ratio: 1.7968797224241921
+    Status: Firth_L1_Selected
+    ci_high: 274.2973608586449
+    ci_low: 0.011771082035758789
+    log_odds: 0.586051673131849
+    p_value: 0.8193031060095123
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 2280
+    Odds_ratio: 8.688598177302824
+    Status: Firth_L1_Selected
+    ci_high: 169.9306588543321
+    ci_low: 0.44425025357750714
+    log_odds: 2.162011611800146
+    p_value: 0.15411831505893506
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 2280
+    Odds_ratio: 1.83710829673113
+    Status: Firth_Exact
+    ci_high: 4.144906164469729
+    ci_low: 0.8142444629624379
+    log_odds: 0.608192757533503
+    p_value: 0.14292632613523001
+  Intercept:
+    N_total: 2280
+    Odds_ratio: 0.024533933871912376
+    Status: Firth_Exact
+    ci_high: 0.04373411229559646
+    ci_low: 0.013763030267153165
+    log_odds: -3.70769806374032
+    p_value: 3.0469794361550957e-36
+dirty:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1840
+    Odds_ratio: 0.6607671215841251
+    Status: Firth_L1_Selected
+    ci_high: 6.361110153325321
+    ci_low: 0.06863789156965419
+    log_odds: -0.4143538134851789
+    p_value: 0.7198783198640035
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 1840
+    Odds_ratio: 0.18226925152995946
+    Status: Firth_L1_Selected
+    ci_high: 0.6920342358182733
+    ci_low: 0.04800641114815547
+    log_odds: -1.7022702811345927
+    p_value: 0.012392754554471497
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 1840
+    Odds_ratio: 4.514675289551217
+    Status: Firth_L1_Selected
+    ci_high: 89.87544271801212
+    ci_low: 0.22678378379770123
+    log_odds: 1.507333266132375
+    p_value: 0.3232966687370507
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 1840
+    Odds_ratio: 8.443061410912536
+    Status: Firth_L1_Selected
+    ci_high: 2083.964439848279
+    ci_low: 0.034206575038118296
+    log_odds: 2.1333449692499826
+    p_value: 0.44783199108933636
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1840
+    Odds_ratio: 1.9846877091951183
+    Status: Firth_L1_Selected
+    ci_high: 43.77534773446791
+    ci_low: 0.08998181640779247
+    log_odds: 0.6854615764197142
+    p_value: 0.6640880875393114
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1840
+    Odds_ratio: 3.62482478768564
+    Status: Firth_L1_Selected
+    ci_high: 11.721325631849837
+    ci_low: 1.1209785611379364
+    log_odds: 1.2878059527069443
+    p_value: 0.03150100983109856
+  Intercept:
+    N_total: 1840
+    Odds_ratio: 0.006663252129534422
+    Status: Firth_L1_Selected
+    ci_high: 0.019159432805231275
+    ci_low: 0.002317340465821219
+    log_odds: -5.011147605875364
+    p_value: 1.4154407890904348e-20
+environmental_policy:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 5425
+    Odds_ratio: 0.13364822501150067
+    Status: Firth_Exact
+    ci_high: 0.21548186312109144
+    ci_low: 0.08289258218770426
+    log_odds: -2.0125441173570753
+    p_value: 1.4825930778033012e-16
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 5425
+    Odds_ratio: 0.6474450034683371
+    Status: Firth_L1_Selected
+    ci_high: 2.018734839228679
+    ci_low: 0.20764739596819845
+    log_odds: -0.4347214257442093
+    p_value: 0.4537081730864775
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 5425
+    Odds_ratio: 1.1912737670788933
+    Status: Firth_Exact
+    ci_high: 1.6482932678674171
+    ci_low: 0.8609712942445187
+    log_odds: 0.17502312716512344
+    p_value: 0.2907746334912523
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 5425
+    Odds_ratio: 0.7615492172104735
+    Status: Firth_L1_Selected
+    ci_high: 1.9113793483834327
+    ci_low: 0.3034233945890381
+    log_odds: -0.27240047681101703
+    p_value: 0.5617942521407406
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 5425
+    Odds_ratio: 0.8182080648354845
+    Status: Firth_L1_Selected
+    ci_high: 7.484447429435974
+    ci_low: 0.08944740993554925
+    log_odds: -0.20063861673330924
+    p_value: 0.858989955655079
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 5425
+    Odds_ratio: 1.2432804577785048
+    Status: Firth_L1_Selected
+    ci_high: 1.8139505711395525
+    ci_low: 0.8521435596356223
+    log_odds: 0.2177534168274108
+    p_value: 0.2585574510519115
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 5425
+    Odds_ratio: 5.154724672544501
+    Status: Firth_Exact
+    ci_high: 7.8637576655811925
+    ci_low: 3.3789426861458605
+    log_odds: 1.639913706254888
+    p_value: 2.736857155267926e-14
+  Intercept:
+    N_total: 5425
+    Odds_ratio: 0.01617490642701826
+    Status: Firth_Exact
+    ci_high: 0.024761733889375453
+    ci_low: 0.01056580282671778
+    log_odds: -4.124294223649417
+    p_value: 2.3809976976273315e-80
+feed:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 3880
+    Odds_ratio: 1.6609914257294331
+    Status: Firth_Exact
+    ci_high: 1.8999332462422112
+    ci_low: 1.4520997102415987
+    log_odds: 0.5074146685043079
+    p_value: 1.367636455490333e-13
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 3880
+    Odds_ratio: 0.38242095503975976
+    Status: Firth_Exact
+    ci_high: 0.5403943147528314
+    ci_low: 0.2706279153221896
+    log_odds: -0.9612333005621455
+    p_value: 5.078311294122473e-08
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 3880
+    Odds_ratio: 1.5722833060521884
+    Status: Firth_Exact
+    ci_high: 1.798320850329392
+    ci_low: 1.3746572498659506
+    log_odds: 0.45252889790429707
+    p_value: 4.030033127759042e-11
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 3880
+    Odds_ratio: 0.007473032858161897
+    Status: Firth_Exact
+    ci_high: 0.010482370551179905
+    ci_low: 0.005327632697823419
+    log_odds: -4.896454357126496
+    p_value: 6.289454886296328e-177
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 3880
+    Odds_ratio: 0.3400891861722831
+    Status: Firth_L1_Selected
+    ci_high: 0.6682532037525442
+    ci_low: 0.17307908724094243
+    log_odds: -1.0785473834983577
+    p_value: 0.0017504735114101853
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 3880
+    Odds_ratio: 0.5815778941085893
+    Status: Firth_Exact
+    ci_high: 0.8220520428504322
+    ci_low: 0.4114494329859855
+    log_odds: -0.5420103622393234
+    p_value: 0.0021422387931651823
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 3880
+    Odds_ratio: 0.5185173316621827
+    Status: Firth_Exact
+    ci_high: 0.5932533099510857
+    ci_low: 0.4531963306807976
+    log_odds: -0.6567818253289092
+    p_value: 1.1747275392126993e-21
+  Intercept:
+    N_total: 3880
+    Odds_ratio: 1.5408226173372348
+    Status: Firth_Exact
+    ci_high: 1.7577249803790056
+    ci_low: 1.3506858948924132
+    log_odds: 0.4323164409111769
+    p_value: 1.2465144422373215e-10
+footbridge:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 4060
+    Odds_ratio: 2.8578520172401825
+    Status: Firth_L1_Selected
+    ci_high: 3.933380976274245
+    ci_low: 2.076411667648828
+    log_odds: 1.05007029973472
+    p_value: 1.1708983404821925e-10
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 4060
+    Odds_ratio: 0.20692331259270266
+    Status: Firth_Exact
+    ci_high: 0.42882709334690217
+    ci_low: 0.09984736962433495
+    log_odds: -1.5754070249245957
+    p_value: 2.2622784956210672e-05
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 4060
+    Odds_ratio: 0.10766662294353171
+    Status: Firth_L1_Selected
+    ci_high: 0.16924444851692821
+    ci_low: 0.06849324629342367
+    log_odds: -2.2287156505249013
+    p_value: 4.561691420821669e-22
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 4060
+    Odds_ratio: 0.20182976413660594
+    Status: Firth_Exact
+    ci_high: 0.5378095445335872
+    ci_low: 0.07574289840238041
+    log_odds: -1.6003306886948523
+    p_value: 0.001372647784287711
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 4060
+    Odds_ratio: 4.392687523836156
+    Status: Firth_L1_Selected
+    ci_high: 29.09678219276699
+    ci_low: 0.6631559309284182
+    log_odds: 1.4799412319916714
+    p_value: 0.12498819716468647
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 4060
+    Odds_ratio: 1.5824210454955485
+    Status: Firth_Exact
+    ci_high: 4.301948180275448
+    ci_low: 0.5820749716857104
+    log_odds: 0.4589559815296373
+    p_value: 0.36842022928280915
+  Intercept:
+    N_total: 4060
+    Odds_ratio: 0.05176970151814276
+    Status: Firth_L1_Selected
+    ci_high: 0.06803172683210702
+    ci_low: 0.039394884123575426
+    log_odds: -2.960950213622078
+    p_value: 3.7020010209975715e-100
+guarded_speedboat:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 1720
+    Odds_ratio: 25.618076444807112
+    Status: Firth_Exact
+    ci_high: 54.41629950308881
+    ci_low: 12.060464359483472
+    log_odds: 3.243298213431626
+    p_value: 3.2336590301474e-17
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1720
+    Odds_ratio: 9.770678685630902
+    Status: Firth_Exact
+    ci_high: 64.44011077862447
+    ci_low: 1.4814711027701888
+    log_odds: 2.279385929929728
+    p_value: 0.017868226165058735
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 1720
+    Odds_ratio: 22.416208334496506
+    Status: Firth_Exact
+    ci_high: 45.72103374253291
+    ci_low: 10.99026760692207
+    log_odds: 3.10978428356005
+    p_value: 1.218290299116476e-17
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 1720
+    Odds_ratio: 0.04342762343045619
+    Status: Firth_Exact
+    ci_high: 0.2573725866399084
+    ci_low: 0.007327736420725186
+    log_odds: -3.136659555773452
+    p_value: 0.0005505081089643447
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 1720
+    Odds_ratio: 1.179774725252181
+    Status: Firth_L1_Selected
+    ci_high: 65.25993208964152
+    ci_low: 0.021328070038932577
+    log_odds: 0.1653235094485499
+    p_value: 0.9356459340394016
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1720
+    Odds_ratio: 5.338540576356009
+    Status: Firth_Exact
+    ci_high: 28.321479855718234
+    ci_low: 1.0063038948031966
+    log_odds: 1.674952315310905
+    p_value: 0.049143439399818155
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1720
+    Odds_ratio: 0.2966523893318626
+    Status: Firth_Exact
+    ci_high: 0.45167441000602443
+    ci_low: 0.19483645330965113
+    log_odds: -1.215194231929801
+    p_value: 1.4668255712403638e-08
+  Intercept:
+    N_total: 1720
+    Odds_ratio: 4.983533113803836
+    Status: Firth_Exact
+    ci_high: 7.025311178887309
+    ci_low: 3.5351604596556663
+    log_odds: 1.6061391000915364
+    p_value: 4.836598972833247e-20
+hiring:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 3400
+    Odds_ratio: 0.14242138923809675
+    Status: Firth_L1_Selected
+    ci_high: 2.3338796569085116
+    ci_low: 0.008691044567129786
+    log_odds: -1.9489650859602388
+    p_value: 0.17195171451081476
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 3400
+    Odds_ratio: 0.12985225154428398
+    Status: Firth_L1_Selected
+    ci_high: 9.966605178154566
+    ci_low: 0.0016918104941167245
+    log_odds: -2.041358001445087
+    p_value: 0.35665395305945946
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 3400
+    Odds_ratio: 0.7829376165035536
+    Status: Firth_L1_Selected
+    ci_high: 21.75715300137402
+    ci_low: 0.028174242801783527
+    log_odds: -0.2447022585746035
+    p_value: 0.8852965051987423
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 3400
+    Odds_ratio: 0.5985865724381669
+    Status: Firth_L1_Selected
+    ci_high: 221.40251320979962
+    ci_low: 0.0016183460589886973
+    log_odds: -0.5131841154252763
+    p_value: 0.8649324558421176
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 3400
+    Odds_ratio: 1.6313444929914205
+    Status: Firth_L1_Selected
+    ci_high: 11.35116551939825
+    ci_low: 0.23445036108983763
+    log_odds: 0.48940451714921335
+    p_value: 0.6209797451898214
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 3400
+    Odds_ratio: 7.021417255860583
+    Status: Firth_L1_Selected
+    ci_high: 115.06096790506612
+    ci_low: 0.4284711069141463
+    log_odds: 1.9489650859602479
+    p_value: 0.17195171451081437
+  Intercept:
+    N_total: 3400
+    Odds_ratio: 0.0005789416446501361
+    Status: Firth_L1_Selected
+    ci_high: 0.00810099359693526
+    ci_low: 4.137436030526002e-05
+    log_odds: -7.45430887191248
+    p_value: 3.073112832568075e-08
+inpurity:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 1240
+    Odds_ratio: 0.032210768546870716
+    Status: Firth_Exact
+    ci_high: 0.5015627230469909
+    ci_low: 0.002068601916978726
+    log_odds: -3.435454455418542
+    p_value: 0.014183790819697244
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1240
+    Odds_ratio: 6.25537783560884
+    Status: Firth_L1_Selected
+    ci_high: 239.17456591773478
+    ci_low: 0.16360331507692646
+    log_odds: 1.8334415474676593
+    p_value: 0.3240334926467602
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 1240
+    Odds_ratio: 9.632782689798473
+    Status: Firth_Exact
+    ci_high: 50.24951531102451
+    ci_low: 1.846594972599134
+    log_odds: 2.2651721445880364
+    p_value: 0.007194135018586903
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 1240
+    Odds_ratio: 0.15986244576746203
+    Status: Firth_L1_Selected
+    ci_high: 6.112345581321485
+    ci_low: 0.004181046576432204
+    log_odds: -1.833441547467657
+    p_value: 0.3240334926467603
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 1240
+    Odds_ratio: 2.971475655659533
+    Status: Firth_L1_Selected
+    ci_high: 2314.58997118857
+    ci_low: 0.0038147869307681736
+    log_odds: 1.0890586831810685
+    p_value: 0.7485153919175673
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1240
+    Odds_ratio: 0.5118381821074522
+    Status: Firth_L1_Selected
+    ci_high: 15.524682510905992
+    ci_low: 0.01687495538018399
+    log_odds: -0.6697467544685192
+    p_value: 0.7004565101481957
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1240
+    Odds_ratio: 0.10381216230062391
+    Status: Firth_Exact
+    ci_high: 0.5415372698607902
+    ci_low: 0.019900689465567986
+    log_odds: -2.265172144588037
+    p_value: 0.007194135018586803
+  Intercept:
+    N_total: 1240
+    Odds_ratio: 0.009061454927699272
+    Status: Firth_Exact
+    ci_high: 0.04365153036442084
+    ci_low: 0.0018810329150258374
+    log_odds: -4.703725583773852
+    p_value: 4.523651656825946e-09
+lifeboat:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 4260
+    Odds_ratio: 0.45084621268544006
+    Status: Firth_Exact
+    ci_high: 0.570567817732198
+    ci_low: 0.356245657704109
+    log_odds: -0.7966289894586844
+    p_value: 3.360634253939449e-11
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 4260
+    Odds_ratio: 2.2857492422826913
+    Status: Firth_Exact
+    ci_high: 4.574359283240603
+    ci_low: 1.1421598687575343
+    log_odds: 0.8266938665662009
+    p_value: 0.019518527675226684
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 4260
+    Odds_ratio: 0.4258924955446119
+    Status: Firth_Exact
+    ci_high: 0.5399870667073218
+    ci_low: 0.33590511503774473
+    log_odds: -0.8535683224368715
+    p_value: 1.8116539939868244e-12
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 4260
+    Odds_ratio: 2.6618321107839424
+    Status: Firth_Exact
+    ci_high: 4.404683184153407
+    ci_low: 1.6085947365048283
+    log_odds: 0.97901464915753
+    p_value: 0.00013906401920225905
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 4260
+    Odds_ratio: 0.09536882584299025
+    Status: Firth_Exact
+    ci_high: 0.39133082151585025
+    ci_low: 0.023241749544386996
+    log_odds: -2.350003527064145
+    p_value: 0.0011045632236877032
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 4260
+    Odds_ratio: 3.9021111686488625
+    Status: Firth_Exact
+    ci_high: 7.839601203328005
+    ci_low: 1.9422507826074582
+    log_odds: 1.3615177319664975
+    p_value: 0.00013081997158247678
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 4260
+    Odds_ratio: 0.325197433424538
+    Status: Firth_Exact
+    ci_high: 0.45398906223046837
+    ci_low: 0.23294255193359908
+    log_odds: -1.1233227936380945
+    p_value: 4.141264091565394e-11
+  Intercept:
+    N_total: 4260
+    Odds_ratio: 0.21964828648275453
+    Status: Firth_Exact
+    ci_high: 0.2595406082166277
+    ci_low: 0.18588755758228712
+    log_odds: -1.5157277097164112
+    p_value: 6.911414718653739e-71
+party:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 1.993152709850951
+    Status: Firth_Exact
+    ci_high: 2.9644503494404044
+    ci_low: 1.3400992617522172
+    log_odds: 0.6897176614016051
+    p_value: 0.0006608756301814757
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 1.2264824444046838
+    Status: Firth_L1_Selected
+    ci_high: 8.601132227566929
+    ci_low: 0.17489083374531603
+    log_odds: 0.2041502710425716
+    p_value: 0.8372352948474817
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 0.8054380248439715
+    Status: Firth_Exact
+    ci_high: 1.1886421246714378
+    ci_low: 0.5457743743045274
+    log_odds: -0.21636901930779515
+    p_value: 0.27586186766059406
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 3.4150449086460393
+    Status: Firth_L1_Selected
+    ci_high: 7.807459777248152
+    ci_low: 1.493767763242945
+    log_odds: 1.2281906433450838
+    p_value: 0.0036008510788423462
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 1200
+    Odds_ratio: 1.5461690393566698
+    Status: Firth_L1_Selected
+    ci_high: 76.7943141674807
+    ci_low: 0.031130412767947657
+    log_odds: 0.43578028400480157
+    p_value: 0.8268810466587453
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 1.0516705642259736
+    Status: Firth_L1_Selected
+    ci_high: 6.32237385851995
+    ci_low: 0.17493602884127624
+    log_odds: 0.050379913396779503
+    p_value: 0.9560991566102943
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 0.027966835029740462
+    Status: Firth_Exact
+    ci_high: 0.07202071114432157
+    ci_low: 0.010859985261925395
+    log_odds: -3.57673593406146
+    p_value: 1.2539669570231652e-13
+  Intercept:
+    N_total: 1200
+    Odds_ratio: 0.20168498720255978
+    Status: Firth_Exact
+    ci_high: 0.28866326910027035
+    ci_low: 0.14091447862307402
+    log_odds: -1.601048268113092
+    p_value: 2.0994798414710098e-18
+prevent_spread:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 1600
+    Odds_ratio: 0.31393970449373887
+    Status: Firth_Exact
+    ci_high: 0.42204589393948505
+    ci_low: 0.23352469357692135
+    log_odds: -1.1585543354181245
+    p_value: 1.672091711059559e-14
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1600
+    Odds_ratio: 1.8921521471462674
+    Status: Firth_Exact
+    ci_high: 4.081036027175005
+    ci_low: 0.8772869742168292
+    log_odds: 0.6377148834357436
+    p_value: 0.10392307039285661
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 1600
+    Odds_ratio: 1.0813454723301836
+    Status: Firth_Exact
+    ci_high: 1.4224561917899448
+    ci_low: 0.8220344761954261
+    log_odds: 0.07820607347474386
+    p_value: 0.5761243406712251
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 1600
+    Odds_ratio: 0.02833851383444188
+    Status: Firth_Exact
+    ci_high: 0.07320112856774832
+    ci_low: 0.010970751162690117
+    log_odds: -3.5635334866577524
+    p_value: 1.841456920723565e-13
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 1600
+    Odds_ratio: 7.39881354389986
+    Status: Firth_L1_Selected
+    ci_high: 157.31453245601162
+    ci_low: 0.34798083179443784
+    log_odds: 2.0013196554501658
+    p_value: 0.1994374809190453
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1600
+    Odds_ratio: 0.5128695083317485
+    Status: Firth_Exact
+    ci_high: 1.0017424267564132
+    ci_low: 0.2625776103225882
+    log_odds: -0.6677338358925202
+    p_value: 0.05059873865603247
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1600
+    Odds_ratio: 1.8739035353486635
+    Status: Firth_Exact
+    ci_high: 2.4786285621865325
+    ci_low: 1.4167166929983743
+    log_odds: 0.6280237072238113
+    p_value: 1.077093027755048e-05
+  Intercept:
+    N_total: 1600
+    Odds_ratio: 0.20810700663309187
+    Status: Firth_Exact
+    ci_high: 0.27301953870010887
+    ci_low: 0.1586279370919194
+    log_odds: -1.5697028766006194
+    p_value: 9.100264224445709e-30
+report_cheating:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 3.9730577590056693
+    Status: Firth_L1_Selected
+    ci_high: 14.178526737581256
+    ci_low: 1.1133165136653662
+    log_odds: 1.3795360146089095
+    p_value: 0.0335583134828316
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 1.1148675919678805
+    Status: Firth_L1_Selected
+    ci_high: 1.7601920588570985
+    ci_low: 0.7061330275670604
+    log_odds: 0.10873564626223929
+    p_value: 0.6407427388029638
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 5.332584232935678
+    Status: Firth_L1_Selected
+    ci_high: 14.479984285508746
+    ci_low: 1.9638456810904672
+    log_odds: 1.6738359673821979
+    p_value: 0.0010228397067472159
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 1200
+    Odds_ratio: 1.364482473283683
+    Status: Firth_L1_Selected
+    ci_high: 17.512024735102706
+    ci_low: 0.10631622830947522
+    log_odds: 0.31077521629349586
+    p_value: 0.8113628401106693
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 0.9985977808806525
+    Status: Firth_L1_Selected
+    ci_high: 3.359826048850884
+    ci_low: 0.29680034426806756
+    log_odds: -0.001403203148567385
+    p_value: 0.9981913986434623
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 0.23500565325546716
+    Status: Firth_L1_Selected
+    ci_high: 0.4082246949787294
+    ci_low: 0.13528739868347872
+    log_odds: -1.4481457087210856
+    p_value: 2.7483536701825464e-07
+  Intercept:
+    N_total: 1200
+    Odds_ratio: 0.11433586967567579
+    Status: Firth_L1_Selected
+    ci_high: 0.16242405347756353
+    ci_low: 0.0804849455151599
+    log_odds: -2.1686149369780963
+    p_value: 9.697513193915168e-34
+report_stealing:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 2160
+    Odds_ratio: 0.3652645985268462
+    Status: Firth_Exact
+    ci_high: 0.4750122494989967
+    ci_low: 0.2808732344854191
+    log_odds: -1.0071332605618342
+    p_value: 5.755221619722838e-14
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 2160
+    Odds_ratio: 0.9265849823751093
+    Status: Firth_L1_Selected
+    ci_high: 1.5668439585962692
+    ci_low: 0.5479548393142242
+    log_odds: -0.07624951336694179
+    p_value: 0.7760348448380845
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 2160
+    Odds_ratio: 0.35296256686439914
+    Status: Firth_Exact
+    ci_high: 0.459565282693164
+    ci_low: 0.27108786999187867
+    log_odds: -1.04139327054884
+    p_value: 1.0439364581776576e-14
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 2160
+    Odds_ratio: 1.033276150582775
+    Status: Firth_L1_Selected
+    ci_high: 1.816713567776058
+    ci_low: 0.5876873615636284
+    log_odds: 0.03273448314607764
+    p_value: 0.9094782734325486
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 2160
+    Odds_ratio: 0.670981590586057
+    Status: Firth_L1_Selected
+    ci_high: 2.081634959797053
+    ci_low: 0.21628013729616083
+    log_odds: -0.39901357817511396
+    p_value: 0.48971836045190076
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 2160
+    Odds_ratio: 1.13386603500528
+    Status: Firth_L1_Selected
+    ci_high: 1.9200930136191834
+    ci_low: 0.6695780757596055
+    log_odds: 0.1256330634111027
+    p_value: 0.640162473337754
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 2160
+    Odds_ratio: 0.8524236959817743
+    Status: Firth_Exact
+    ci_high: 1.0922976211620044
+    ci_low: 0.6652272635165416
+    log_odds: -0.1596715800101193
+    p_value: 0.2069032544311719
+  Intercept:
+    N_total: 2160
+    Odds_ratio: 0.4237713512638331
+    Status: Firth_Exact
+    ci_high: 0.5247006451852264
+    ci_low: 0.3422564081059593
+    log_odds: -0.8585612350935093
+    p_value: 3.3589780506811005e-15
+resume:
+  Intercept:
+    N_total: 1880
+    Odds_ratio: 0.0
+    Status: Constant_Target
+    ci_high: .nan
+    ci_low: .nan
+    log_odds: -.inf
+    p_value: .nan
+save_dying:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 6770
+    Odds_ratio: 0.654436674989896
+    Status: Firth_Exact
+    ci_high: 0.7678112082708276
+    ci_low: 0.557802955932837
+    log_odds: -0.4239804515752722
+    p_value: 1.9803511752897513e-07
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 6770
+    Odds_ratio: 0.11552204016771012
+    Status: Firth_Exact
+    ci_high: 0.22862477152037378
+    ci_low: 0.05837224757300966
+    log_odds: -2.158293943262007
+    p_value: 5.756156269209238e-10
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 6770
+    Odds_ratio: 0.6588650386974664
+    Status: Firth_Exact
+    ci_high: 0.7729478119847103
+    ci_low: 0.5616202445843794
+    log_odds: -0.41723656257411207
+    p_value: 3.0410417722504886e-07
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 6770
+    Odds_ratio: 0.004587155320828989
+    Status: Firth_Exact
+    ci_high: 0.008853396003696773
+    ci_low: 0.0023767144188087297
+    log_odds: -5.384495202848379
+    p_value: 5.732816576618094e-58
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 6770
+    Odds_ratio: 0.03207647432537819
+    Status: Firth_L1_Selected
+    ci_high: 0.12930554064461333
+    ci_low: 0.007957123878972065
+    log_odds: -3.4396324045990467
+    p_value: 1.3252361340579106e-06
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 6770
+    Odds_ratio: 4.290559470841096
+    Status: Firth_Exact
+    ci_high: 8.545002230838621
+    ci_low: 2.154347076281282
+    log_odds: 1.45641713722039
+    p_value: 3.421620544942788e-05
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 6770
+    Odds_ratio: 0.39673389851967444
+    Status: Firth_Exact
+    ci_high: 0.4690344508231398
+    ci_low: 0.33557830551336154
+    log_odds: -0.9244895038404229
+    p_value: 2.6641993742607884e-27
+  Intercept:
+    N_total: 6770
+    Odds_ratio: 23.167732542463735
+    Status: Firth_Exact
+    ci_high: 28.09968131725385
+    ci_low: 19.101420585491127
+    log_odds: 3.1427604718714655
+    p_value: 1.6068262037224632e-223
+self-harming:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 0.3329463750926176
+    Status: Firth_Exact
+    ci_high: 4.579085031077901
+    ci_low: 0.02420861109478448
+    log_odds: -1.0997738377272481
+    p_value: 0.41089656249705697
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 0.4307712230857752
+    Status: Firth_L1_Selected
+    ci_high: 9.420669319199565
+    ci_low: 0.01969752258054856
+    log_odds: -0.842178134710579
+    p_value: 0.5926232462405503
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 0.33294637509261693
+    Status: Firth_Exact
+    ci_high: 4.57908503107789
+    ci_low: 0.024208611094784435
+    log_odds: -1.0997738377272501
+    p_value: 0.4108965624970561
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 0.43077122308577565
+    Status: Firth_L1_Selected
+    ci_high: 9.420669319199565
+    ci_low: 0.01969752258054861
+    log_odds: -0.842178134710578
+    p_value: 0.5926232462405506
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 1200
+    Odds_ratio: 0.047437728077213887
+    Status: Firth_L1_Selected
+    ci_high: 1.174311797240796
+    ci_low: 0.001916303702658151
+    log_odds: -3.0483374158860386
+    p_value: 0.06262782870653201
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 0.430771223085777
+    Status: Firth_L1_Selected
+    ci_high: 9.420669319199623
+    ci_low: 0.01969752258054861
+    log_odds: -0.8421781347105749
+    p_value: 0.5926232462405523
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 1200
+    Odds_ratio: 0.33294637509262215
+    Status: Firth_Exact
+    ci_high: 4.579085031077959
+    ci_low: 0.024208611094784824
+    log_odds: -1.0997738377272346
+    p_value: 0.4108965624970625
+  Intercept:
+    N_total: 1200
+    Odds_ratio: 3207.3248811958
+    Status: Firth_Exact
+    ci_high: 116021.45678496061
+    ci_low: 88.6640555858896
+    log_odds: 8.073192498333961
+    p_value: 1.0355751550866521e-05
+shark_attack:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 3500
+    Odds_ratio: 1.41038370994186
+    Status: Firth_Exact
+    ci_high: 1.7125284631019504
+    ci_low: 1.1615469477606832
+    log_odds: 0.34386180207868194
+    p_value: 0.0005164980149646027
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 3500
+    Odds_ratio: 0.8429090441118476
+    Status: Firth_Exact
+    ci_high: 1.3381923430215612
+    ci_low: 0.5309368719307498
+    log_odds: -0.17089622227965273
+    p_value: 0.46865925074546744
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 3500
+    Odds_ratio: 1.1504082780307516
+    Status: Firth_Exact
+    ci_high: 1.3951089704454849
+    ci_low: 0.9486278378233636
+    log_odds: 0.14011690374348415
+    p_value: 0.15444995876964057
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 3500
+    Odds_ratio: 4.375521180537161
+    Status: Firth_Exact
+    ci_high: 6.564648627480101
+    ci_low: 2.9164067549916015
+    log_odds: 1.4760256396944451
+    p_value: 9.946315781426495e-13
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 3500
+    Odds_ratio: 0.6558936938143614
+    Status: Firth_L1_Selected
+    ci_high: 1.6387418399762987
+    ci_low: 0.26251635681168
+    log_odds: -0.4217565552821643
+    p_value: 0.3666628106766754
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 3500
+    Odds_ratio: 0.70258523271524
+    Status: Firth_Exact
+    ci_high: 1.1138522175029504
+    ci_low: 0.443170109528664
+    log_odds: -0.35298855742532076
+    p_value: 0.1332632549914669
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 3500
+    Odds_ratio: 0.9162176432130982
+    Status: Firth_Exact
+    ci_high: 1.1423389111915996
+    ci_low: 0.7348561460270225
+    log_odds: -0.08750134076981059
+    p_value: 0.4368660650195334
+  Intercept:
+    N_total: 3500
+    Odds_ratio: 0.12684223460941144
+    Status: Firth_Exact
+    ci_high: 0.15280044141753454
+    ci_low: 0.10529388744856527
+    log_odds: -2.064811211922149
+    p_value: 9.418035944765296e-105
+terrorist:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 4720
+    Odds_ratio: 0.4444700412274876
+    Status: Firth_L1_Selected
+    ci_high: 0.5529322638543809
+    ci_low: 0.3572835778683949
+    log_odds: -0.810872625112881
+    p_value: 3.3755325728125867e-13
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 4720
+    Odds_ratio: 0.7432324960093756
+    Status: Firth_L1_Selected
+    ci_high: 1.3442145563016052
+    ci_low: 0.41094224172378635
+    log_odds: -0.2967463679909027
+    p_value: 0.3263310568428363
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 4720
+    Odds_ratio: 3.6612740570158144
+    Status: Firth_L1_Selected
+    ci_high: 5.8517522416108365
+    ci_low: 2.2907544897845855
+    log_odds: 1.2978111898492644
+    p_value: 5.8149850527748536e-08
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 4720
+    Odds_ratio: 0.20171973781335129
+    Status: Firth_Exact
+    ci_high: 0.6676690306709858
+    ci_low: 0.0609446458563372
+    log_odds: -1.6008759815298048
+    p_value: 0.008755426063213095
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 4720
+    Odds_ratio: 0.31163934733038684
+    Status: Firth_L1_Selected
+    ci_high: 0.5589465066718359
+    ci_low: 0.17375380585664743
+    log_odds: -1.1659086978279658
+    p_value: 9.171644926245471e-05
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 4720
+    Odds_ratio: 1.3750654570278693
+    Status: Firth_L1_Selected
+    ci_high: 1.7929509334592715
+    ci_low: 1.0545771085119404
+    log_odds: 0.3185013350966249
+    p_value: 0.018649913433913135
+  Intercept:
+    N_total: 4720
+    Odds_ratio: 16.25576976381846
+    Status: Firth_L1_Selected
+    ci_high: 19.544988048437226
+    ci_low: 13.520092719391728
+    log_odds: 2.7884479081448417
+    p_value: 2.6112108432651557e-193
+total:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 71895
+    Odds_ratio: 0.8526692731898121
+    Status: Firth_Exact
+    ci_high: 0.8803020821415412
+    ci_low: 0.8259038620848599
+    log_odds: -0.15938352860861105
+    p_value: 1.1865087702467592e-22
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 71895
+    Odds_ratio: 0.8941194808038068
+    Status: Firth_L1_Selected
+    ci_high: 0.9452929518215025
+    ci_low: 0.8457162876464852
+    log_odds: -0.11191586530709412
+    p_value: 8.106444616669338e-05
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 71895
+    Odds_ratio: 0.9870368158307606
+    Status: Firth_Exact
+    ci_high: 1.019015054033732
+    ci_low: 0.9560621032523795
+    log_odds: -0.013047939503925153
+    p_value: 0.42251397188427087
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 71895
+    Odds_ratio: 0.7958501956952397
+    Status: Firth_L1_Selected
+    ci_high: 0.8375006503670269
+    ci_low: 0.7562710950858121
+    log_odds: -0.22834430721167587
+    p_value: 1.7316651590134062e-18
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 71895
+    Odds_ratio: 0.5931844013168641
+    Status: Firth_Exact
+    ci_high: 0.6752909132061062
+    ci_low: 0.5210609636298373
+    log_odds: -0.5222499648886728
+    p_value: 2.8857854186601867e-15
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 71895
+    Odds_ratio: 1.0604115984802558
+    Status: Firth_L1_Selected
+    ci_high: 1.1312849731238523
+    ci_low: 0.9939783387084243
+    log_odds: 0.05865713320793633
+    p_value: 0.07557001135497951
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 71895
+    Odds_ratio: 0.9984860961919282
+    Status: Firth_Exact
+    ci_high: 1.0312876949250402
+    ci_low: 0.9667277998125074
+    log_odds: -0.0015150509183310655
+    p_value: 0.926803608390092
+  Intercept:
+    N_total: 71895
+    Odds_ratio: 0.47012396851028093
+    Status: Firth_Exact
+    ci_high: 0.4846576250825094
+    ci_low: 0.45602613954588905
+    log_odds: -0.7547588562694896
+    p_value: 0.0
+transplant:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 5320
+    Odds_ratio: 0.15591091616335162
+    Status: Firth_Exact
+    ci_high: 0.267822633543037
+    ci_low: 0.09076235812231874
+    log_odds: -1.8584704850788103
+    p_value: 1.6680970835897256e-11
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 5320
+    Odds_ratio: 0.4160486024576278
+    Status: Firth_L1_Selected
+    ci_high: 1.33143825208532
+    ci_low: 0.13000711023274172
+    log_odds: -0.8769531927144614
+    p_value: 0.13950722385478634
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 5320
+    Odds_ratio: 0.12167775275095237
+    Status: Firth_Exact
+    ci_high: 0.21988186450501415
+    ci_low: 0.06733377283229411
+    log_odds: -2.1063790997178153
+    p_value: 3.014159497220829e-12
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 5320
+    Odds_ratio: 0.15472079920499346
+    Status: Firth_L1_Selected
+    ci_high: 2.6958440837745905
+    ci_low: 0.008879788653472238
+    log_odds: -1.8661330817980337
+    p_value: 0.20060510531792491
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 5320
+    Odds_ratio: 3.310068197399891
+    Status: Firth_L1_Selected
+    ci_high: 230.9125407084356
+    ci_low: 0.047448923466103854
+    log_odds: 1.1969687926207992
+    p_value: 0.5805067016325619
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 5320
+    Odds_ratio: 0.15794501997919724
+    Status: Firth_L1_Selected
+    ci_high: 0.5347970135597416
+    ci_low: 0.046646912199785964
+    log_odds: -1.8455082813276622
+    p_value: 0.003019605941729349
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 5320
+    Odds_ratio: 3.1220380682018924
+    Status: Firth_Exact
+    ci_high: 4.843142563726479
+    ci_low: 2.0125613836570686
+    log_odds: 1.1384860155492946
+    p_value: 3.734890878282265e-07
+  Intercept:
+    N_total: 5320
+    Odds_ratio: 0.03299488454668215
+    Status: Firth_Exact
+    ci_high: 0.04876732071457461
+    ci_low: 0.022323605035031724
+    log_odds: -3.4114027432684324
+    p_value: 1.185034316294413e-65
+trolley:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 4920
+    Odds_ratio: 0.3762577941310858
+    Status: Firth_Exact
+    ci_high: 0.43943994035209133
+    ci_low: 0.3221599009206146
+    log_odds: -0.9774807478350436
+    p_value: 5.371084176421603e-35
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 4920
+    Odds_ratio: 2.7033353114947087
+    Status: Firth_Exact
+    ci_high: 3.8129278732997016
+    ci_low: 1.9166430756661135
+    log_odds: 0.9944863112079115
+    p_value: 1.4479418268359441e-08
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 4920
+    Odds_ratio: 0.4055964995420772
+    Status: Firth_Exact
+    ci_high: 0.47626219048092927
+    ci_low: 0.34541587329169593
+    log_odds: -0.9023964570627275
+    p_value: 3.337895594596752e-28
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 4920
+    Odds_ratio: 1.1410807450682448
+    Status: Firth_Exact
+    ci_high: 1.6445541024100323
+    ci_low: 0.791743649453291
+    log_odds: 0.13197583530705437
+    p_value: 0.4791176938135734
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 4920
+    Odds_ratio: 3.988037679333693
+    Status: Firth_Exact
+    ci_high: 9.023309571341999
+    ci_low: 1.762595465226831
+    log_odds: 1.3832993002329153
+    p_value: 0.0008986065404766012
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 4920
+    Odds_ratio: 6.962998798058108
+    Status: Firth_Exact
+    ci_high: 9.988486793583323
+    ci_low: 4.853923648665654
+    log_odds: 1.9406102433419987
+    p_value: 5.574933078754958e-26
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 4920
+    Odds_ratio: 4.031301976542319
+    Status: Firth_Exact
+    ci_high: 4.725238746295905
+    ci_low: 3.439275028973596
+    log_odds: 1.3940893948846729
+    p_value: 2.511756062015727e-66
+  Intercept:
+    N_total: 4920
+    Odds_ratio: 0.349483091862595
+    Status: Firth_Exact
+    ci_high: 0.39416846946630196
+    ci_low: 0.30986352526677885
+    log_odds: -1.0513000965540797
+    p_value: 9.695314918883818e-66
+vaccine_policy:
+  C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 5320
+    Odds_ratio: 0.06160675361662817
+    Status: Firth_Exact
+    ci_high: 0.11545130047830593
+    ci_low: 0.03287439877641836
+    log_odds: -2.786983777818745
+    p_value: 3.407755393311209e-18
+  C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 5320
+    Odds_ratio: 0.05679182864149045
+    Status: Firth_L1_Selected
+    ci_high: 0.27017214648980975
+    ci_low: 0.011937987843488013
+    log_odds: -2.8683628255497444
+    p_value: 0.00031270152482784245
+  C(personal_force, Treatment(reference=0))[T.1]:
+    N_total: 5320
+    Odds_ratio: 1.1297936432544622
+    Status: Firth_Exact
+    ci_high: 1.5593505383480708
+    ci_low: 0.8185675029107994
+    log_odds: 0.12203499945883815
+    p_value: 0.45792514486487523
+  C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:
+    N_total: 5320
+    Odds_ratio: 1.323603885810701
+    Status: Firth_L1_Selected
+    ci_high: 4.397109578559596
+    ci_low: 0.3984270155730536
+    log_odds: 0.2803582328502983
+    p_value: 0.6471785380377342
+  ? C(personal_force, Treatment(reference=0))[T.1]:C(intention_of_harm, Treatment(reference=0))[T.1]:C(self_benefit,
+    Treatment(reference=0))[T.1]
+  : N_total: 5320
+    Odds_ratio: 0.6737611020447092
+    Status: Firth_L1_Selected
+    ci_high: 8.121465534422413
+    ci_low: 0.055895579523725106
+    log_odds: -0.39487967890625414
+    p_value: 0.7558771012814502
+  C(personal_force, Treatment(reference=0))[T.1]:C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 5320
+    Odds_ratio: 1.1357614158728593
+    Status: Firth_L1_Selected
+    ci_high: 1.591601564741835
+    ci_low: 0.8104754496108819
+    log_odds: 0.1273032770027306
+    p_value: 0.4596487676332539
+  C(self_benefit, Treatment(reference=0))[T.1]:
+    N_total: 5320
+    Odds_ratio: 23.178323783386816
+    Status: Firth_Exact
+    ci_high: 48.30872716288545
+    ci_low: 11.120862108332686
+    log_odds: 3.1432175222419647
+    p_value: 4.916825042767452e-17
+  Intercept:
+    N_total: 5320
+    Odds_ratio: 0.005041058553339402
+    Status: Firth_Exact
+    ci_high: 0.010529253262810897
+    ci_low: 0.0024134922680558897
+    log_odds: -5.290139188527677
+    p_value: 5.2403822153241796e-45

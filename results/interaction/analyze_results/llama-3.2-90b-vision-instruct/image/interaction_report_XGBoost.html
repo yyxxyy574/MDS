@@ -1,0 +1,2077 @@
+
+    <!DOCTYPE html>
+    <html lang="zh">
+    <head>
+        <meta charset="UTF-8">
+        <title>SHAP Interaction Analysis Report</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+        <style>
+            body { background-color: #f4f6f9; font-family: 'Segoe UI', sans-serif; padding: 20px; }
+            .card { border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+            .badge { font-weight: 500; }
+            .breadcrumb { background: transparent; padding: 0; margin-bottom: 0; }
+            .accuracy-badge { padding: 8px 16px; border-radius: 6px; font-size: 0.9em; }
+        </style>
+    </head>
+    <body>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header bg-white p-4 border-bottom">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item text-muted">llama-3.2-90b-vision-instruct</li>
+                    <li class="breadcrumb-item text-muted">image</li>
+                    <li class="breadcrumb-item active" aria-current="page">XGBoost</li>
+                  </ol>
+                </nav>
+                <h3 class="text-primary mt-2">SHAP Interaction Analysis Report (Native)</h3>
+                <p class="text-muted">Analysis based on SHAP Interaction Values (Main Effects + 2-Way Interactions)</p>
+                <div class="mt-3 d-flex gap-3">
+                    <span class="accuracy-badge bg-success-subtle text-success border border-success">
+                        Train Acc: 0.7318
+                    </span>
+                    <span class="accuracy-badge bg-info-subtle text-info border border-info">
+                        Test Acc: 0.6268
+                    </span>
+                </div>
+                <div class="mt-3">
+                    <button class="btn btn-sm btn-outline-secondary" onclick="filterTable('')">All Effects</button>
+                    <button class="btn btn-sm btn-outline-primary" onclick="filterTable('Main Effect')">Main Effects Only</button>
+                    <button class="btn btn-sm btn-outline-warning" onclick="filterTable('Interaction')">Interactions Only</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="analysisTable" class="table table-hover align-middle" style="width:100%">
+                    <thead class="table-light">
+                        <tr><th>#</th><th>Feature / Interaction</th><th>Type</th><th>Importance</th><th>Normalized</th><th>Direction</th><th>Components</th></tr>
+                    </thead>
+                    <tbody>
+            <tr style="">
+                <td>1</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_profession=high</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.3368</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 100.0%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.041388</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person1_profession=high</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>2</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_color=black</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.3187</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 94.6257095336914%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.039164</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person2_color=black</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>3</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_profession=high</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.3039</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 90.23158264160156%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.037345</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person2_profession=high</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>4</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_color=black</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.2922</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 86.7550048828125%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.035906</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person1_color=black</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>5</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_gender=female</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.2252</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 66.85645294189453%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.027671</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person1_gender=female</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>6</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_gender=female</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.2022</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 60.01366424560547%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.024839</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person2_gender=female</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>7</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person3_profession=high</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1978</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 58.709632873535156%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.024299</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person3_profession=high</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>8</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person3_gender=female</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1897</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 56.31732177734375%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.023309</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person3_gender=female</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>9</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person3_color=black</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1735</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 51.509674072265625%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.021319</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person3_color=black</span></td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>10</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_color=black & person3_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1299</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 38.557395935058594%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.015958</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person2_color=black</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>11</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_gender=female & person2_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1238</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 36.74751281738281%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.015209</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_gender=female</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="">
+                <td>12</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs5</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1200</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 35.62742614746094%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.014746</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Positive (Promotes 1) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>quantity_level=1vs5</span></td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>13</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_profession=high & person2_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1074</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 31.88397979736328%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.013196</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_profession=high</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>14</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_color=black & person2_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1067</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 31.67931365966797%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.013112</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_color=black</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>15</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_gender=female & person3_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1059</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 31.442108154296875%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.013013</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person2_gender=female</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>16</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_color=black & person1_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1055</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 31.3232421875%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.012964</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_color=black</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person1_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>17</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_color=black & person2_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1047</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 31.08523178100586%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.012866</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person2_color=black</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>18</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_color=black & person3_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1037</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 30.79931640625%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.012747</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_color=black</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>19</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person3_color=black & person3_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1034</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 30.708084106445312%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.012710</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person3_color=black</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>20</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_profession=high & person2_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1024</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 30.387422561645508%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.012577</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person2_profession=high</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>21</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_color=black & person3_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1020</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 30.2784481048584%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.012532</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_color=black</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>22</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_color=black & person2_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1020</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 30.27263069152832%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.012529</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_color=black</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>23</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_profession=high & person2_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.1012</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 30.04348373413086%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.012434</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_profession=high</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>24</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_profession=high & person3_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0995</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 29.52750587463379%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.012221</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_profession=high</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>25</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person3_profession=high & person3_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0989</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 29.35582160949707%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.012150</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person3_profession=high</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>26</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_gender=female & person3_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0986</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 29.25792121887207%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.012109</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_gender=female</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>27</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_profession=high & person2_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0969</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 28.776527404785156%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.011910</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_profession=high</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>28</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_profession=high & person1_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0964</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 28.631723403930664%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.011850</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_profession=high</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person1_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>29</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_color=black & person3_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0964</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 28.619728088378906%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.011845</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_color=black</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>30</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs10 & person2_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0957</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 28.400684356689453%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.011755</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs10</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>31</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_color=black & person1_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0954</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 28.320690155029297%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.011721</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_color=black</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person1_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>32</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_color=black & person2_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0950</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 28.216127395629883%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.011678</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person2_color=black</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>33</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_profession=high & person3_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0947</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 28.115272521972656%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.011636</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person2_profession=high</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>34</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_profession=high & person3_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0946</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 28.09099769592285%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.011626</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person2_profession=high</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>35</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_color=black & person2_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0943</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 27.98519515991211%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.011583</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_color=black</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>36</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_gender=female & person2_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0932</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 27.676841735839844%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.011455</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_gender=female</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>37</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_gender=female & person3_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0931</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 27.652210235595703%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.011445</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person2_gender=female</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>38</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_profession=high & person3_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0916</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 27.180477142333984%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.011250</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_profession=high</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>39</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_gender=female & person2_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0913</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 27.090078353881836%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.011212</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_gender=female</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>40</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_profession=high & person3_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0906</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 26.91035270690918%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.011138</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person2_profession=high</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>41</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_gender=female & person3_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0899</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 26.70241928100586%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.011052</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_gender=female</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>42</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_profession=high & person3_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0881</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 26.166728973388672%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.010830</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_profession=high</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>43</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_gender=female & person3_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0863</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 25.608333587646484%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.010599</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person1_gender=female</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>44</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_gender=female & person3_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0849</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 25.211566925048828%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.010435</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person2_gender=female</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>45</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_color=black & person3_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0831</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 24.674453735351562%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.010212</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person2_color=black</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>46</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person3_color=black & person3_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0823</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 24.432666778564453%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.010112</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person3_color=black</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>47</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_color=black & person3_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0806</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 23.913469314575195%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.009897</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">person2_color=black</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="">
+                <td>48</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs10</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0794</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 23.58139419555664%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.009760</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>quantity_level=1vs10</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>49</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs2</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0775</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 23.007362365722656%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.009522</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>quantity_level=1vs2</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>50</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs1</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0766</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 22.7374267578125%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.009411</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>quantity_level=1vs1</span></td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>51</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs2 & person2_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0755</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 22.410720825195312%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.009275</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs2</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>52</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs1 & person2_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0718</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 21.320634841918945%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.008824</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs1</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>53</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs10 & person2_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0687</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 20.395832061767578%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.008441</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs10</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>54</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs1 & person2_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0683</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 20.27799415588379%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.008393</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs1</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>55</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs10 & person2_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0642</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 19.0534610748291%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.007886</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs10</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>56</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs1 & person2_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0635</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 18.85382080078125%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.007803</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs1</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>57</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs10 & person1_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0600</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 17.82465934753418%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.007377</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs10</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person1_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>58</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs2 & person1_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0577</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 17.143798828125%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.007096</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs2</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person1_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>59</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs2 & person3_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0577</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 17.133474349975586%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.007091</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs2</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>60</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs2 & person3_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0576</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 17.09463882446289%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.007075</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs2</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>61</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs5 & person1_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0568</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 16.85692024230957%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.006977</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs5</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person1_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>62</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs5 & person1_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0565</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 16.76519012451172%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.006939</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs5</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person1_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>63</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs2 & person2_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0563</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 16.70339584350586%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.006913</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs2</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>64</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs5 & person3_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0549</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 16.307388305664062%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.006749</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs5</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>65</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs2 & person2_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0549</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 16.302690505981445%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.006747</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs2</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>66</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs1 & person3_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0548</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 16.270933151245117%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.006734</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs1</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>67</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs5 & person2_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0541</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 16.0477237701416%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.006642</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs5</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>68</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs5 & person3_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0533</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 15.814149856567383%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.006545</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs5</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>69</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs2 & person1_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0529</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 15.71679973602295%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.006505</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs2</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person1_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>70</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs1 & person1_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0529</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 15.691193580627441%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.006494</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs1</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person1_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>71</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs5 & person3_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0524</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 15.547296524047852%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.006435</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs5</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>72</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs5 & person2_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0521</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 15.472258567810059%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.006404</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs5</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>73</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs5 & person1_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0521</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 15.460127830505371%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.006399</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs5</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person1_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>74</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs5 & person2_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0506</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 15.035120010375977%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.006223</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs5</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person2_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>75</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs10 & person3_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0501</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 14.863996505737305%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.006152</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs10</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>76</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs2 & person1_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0479</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 14.233687400817871%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.005891</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs2</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person1_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>77</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs10 & person1_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0478</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 14.18172836303711%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.005870</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs10</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person1_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>78</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs2 & person3_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0476</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 14.144275665283203%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.005854</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs2</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>79</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs10 & person1_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0476</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 14.141847610473633%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.005853</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs10</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person1_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>80</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs1 & person3_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0466</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 13.82443618774414%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.005722</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs1</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>81</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs1 & person3_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0460</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 13.662264823913574%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.005655</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs1</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>82</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs10 & person3_profession=high</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0449</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 13.327820777893066%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.005516</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs10</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_profession=high</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>83</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs10 & person3_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0448</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 13.300010681152344%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.005505</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs10</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person3_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>84</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs1 & person1_color=black</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0447</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 13.271598815917969%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.005493</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs1</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person1_color=black</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>85</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs1 & person1_gender=female</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0367</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 10.882953643798828%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.004504</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs1</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">person1_gender=female</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>86</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs1 & quantity_level=1vs5</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0068</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 2.0105466842651367%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.000832</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs1</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">quantity_level=1vs5</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>87</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs1 & quantity_level=1vs2</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0060</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 1.7755763530731201%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.000735</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs1</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">quantity_level=1vs2</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>88</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs2 & quantity_level=1vs5</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0046</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 1.378825306892395%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.000571</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs2</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">quantity_level=1vs5</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>89</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs1 & quantity_level=1vs10</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0046</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 1.3538055419921875%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.000560</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs1</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">quantity_level=1vs10</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>90</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs10 & quantity_level=1vs5</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0045</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 1.3257853984832764%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.000549</td>
+                <td class="text-success fw-bold" style="font-size:0.9em;">Synergy (+) ▲</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs10</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">quantity_level=1vs5</span>
+            </td>
+            </tr>
+        
+            <tr style="background-color: #fffae6;">
+                <td>91</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">quantity_level=1vs10 & quantity_level=1vs2</div></td>
+                <td><span class="badge bg-warning text-dark">Interaction</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0043</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 1.2640419006347656%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.000523</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Interference (-) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;">
+                <span class="badge bg-light text-dark border">quantity_level=1vs10</span><br>
+                <span class="text-muted" style="font-size:0.8em;">+</span><br>
+                <span class="badge bg-light text-dark border">quantity_level=1vs2</span>
+            </td>
+            </tr>
+        
+            <tr style="">
+                <td>92</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person3_gender=male</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0000</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 0.0%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.000000</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person3_gender=male</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>93</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_color=white</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0000</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 0.0%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.000000</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person2_color=white</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>94</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_gender=male</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0000</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 0.0%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.000000</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person1_gender=male</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>95</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_color=white</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0000</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 0.0%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.000000</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person1_color=white</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>96</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person1_profession=low</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0000</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 0.0%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.000000</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person1_profession=low</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>97</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_gender=male</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0000</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 0.0%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.000000</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person2_gender=male</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>98</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person2_profession=low</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0000</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 0.0%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.000000</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person2_profession=low</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>99</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person3_color=white</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0000</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 0.0%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.000000</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person3_color=white</span></td>
+            </tr>
+        
+            <tr style="">
+                <td>100</td>
+                <td><div class="fw-bold text-break" style="font-size:0.9em;">person3_profession=low</div></td>
+                <td><span class="badge bg-primary">Main Effect</span></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" style="width:50px;">0.0000</span>
+                        <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress-bar bg-primary" style="width: 0.0%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td>0.000000</td>
+                <td class="text-danger fw-bold" style="font-size:0.9em;">Negative (Promotes 0) ▼</td>
+                <td style="font-size:0.85em; line-height:1.1;"><span class='badge bg-light text-muted border'>person3_profession=low</span></td>
+            </tr>
+        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var table = $('#analysisTable').DataTable({ "order": [[ 3, "desc" ]], "pageLength": 15 });
+            window.filterTable = function(type) { table.column(2).search(type).draw(); };
+        });
+    </script>
+    </body>
+    </html>
+    
