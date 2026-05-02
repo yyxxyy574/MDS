@@ -1,8 +1,5 @@
 """
-Text Gradient Plotter - v1.0
-功能:
-1. 生成高分 Token 柱状图 (继承 Attention Map 的清洗逻辑)。
-2. 生成 HTML 文本高亮文件 (NLP 领域标准展示方法)。
+Text Gradient Plotter
 """
 
 import os
@@ -12,17 +9,138 @@ import matplotlib.pyplot as plt
 import argparse
 from pathlib import Path
 from tqdm import tqdm
+import re
+import unicodedata
 
-# 借用你之前的清洗逻辑
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-try:
-    from plot_attention_map import clean_tokens_and_weights, is_neutral_token
-except ImportError:
-    print("Warning: Ensure plot_attention_map.py is in the same directory for token cleaning logic.")
+# ============================================================================
+# Token Filter
+# ============================================================================
+
+NEUTRAL_WORDS = {
+    'i', 'me', 'my', 'mine', 'myself', 'you', 'your', 'yours', 'yourself',
+    'he', 'she', 'it', 'they', 'them', 'their', 'theirs', 'we', 'us', 'our', 'ours', 'ourselves',
+    'this', 'that', 'these', 'those', 'who', 'whom', 'whose', 'which', 'what',
+    'a', 'an', 'the', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'from', 'as',
+    'into', 'through', 'during', 'before', 'after', 'above', 'below', 'between', 'under', 'over', 'underneath', 'beside', 'behind',
+    'and', 'or', 'but', 'nor', 'so', 'yet', 'both', 'either', 'neither',
+    'if', 'unless', 'until', 'while', 'when', 'where', 'because', 'since', 'although', 'though', 'whereas', 'whether',
+    'be', 'is', 'am', 'are', 'was', 'were', 'been', 'being', 'have', 'has', 'had', 'having',
+    'do', 'does', 'did', 'doing', 'done', 'will', 'would', 'shall', 'should', 'can', 'could', 'may', 'might', 'must', 'need', 'needs',
+    'there', 'here', 'where', 'now', 'then', 'how', 'all', 'some', 'any', 'no', 'not', 'none', 'every', 'each',
+    'more', 'most', 'less', 'least', 'much', 'many', 'few', 'several', 'other', 'another', 'such', 'same', 'different',
+    'very', 'really', 'quite', 'rather', 'too', 'also', 'even', 'just', 'only', 'still', 'already', 'always', 'never', 'often', 'sometimes',
+    'about', 'like', 'than', 'scene', 'image', 'picture', 'photo', 'depicts', 'showing',
+    'text', 'caption', 'description', 'figure', 'visual', 'background',
+    'answer', 'question', 'ask', 'asked', 'asking', 'whether', 'yes', 'no', 'maybe', 'perhaps', 'explain', 'reason',
+    'area', 'space', 'place', 'part', 'side', 'region', 'near', 'next', 'adjacent', 'close', 'far',
+    'thing', 'stuff', 'matter', 'object', 'item', 'situation', 'condition', 'state', 'status',
+    'way', 'means', 'method', 'manner', 'time', 'moment', 'period', 'point', 'case',
+    'choice', 'choose', 'decision', 'decide', 'act', 'action', 'acting',
+    'result', 'consequence', 'outcome', 'effect', 'risk', 'chance', 'probability',
+    'life', 'death', 'die', 'live', 'save', 'kill', 'harm', 'help', 'hurt',
+    'one', 'two', 'three', 'four', 'five', 'first', 'second', 'third',
+    'let', 'say', 'said', 'get', 'got', 'see', 'saw', 'look', 'looking',
+    'know', 'knew', 'think', 'thought', 'want', 'wanted',
+}
+
+CHAT_TEMPLATE_WORDS = {
+    'assistant', 'user', 'system', 'human', 'bot', 'teacher', 'student', 'dilemma',
+}
+
+_BPE_SPACE_CHARS = (
+    "\u0120",
+    "\u010a",
+    "\u2581",
+)
+
+
+def _strip_bpe_markers(s: str) -> str:
+    for ch in _BPE_SPACE_CHARS:
+        s = s.replace(ch, " " if ch == "\u010a" else "")
+    return s
+
+def _normalize_for_neutral_check(token: str) -> str:
+    cleaned = token.lower().strip()
+    for prefix in ('Ġ', 'Ċ', '##', '▁'):
+        cleaned = cleaned.replace(prefix, '')
+    cleaned = re.sub(r'^[^\w]+|[^\w]+$', '', cleaned)
+    return cleaned
+
+def is_neutral_token(token: str) -> bool:
+    cleaned = _normalize_for_neutral_check(token)
+    if not cleaned:
+        return True
+    return cleaned in NEUTRAL_WORDS or cleaned in CHAT_TEMPLATE_WORDS
+
+def is_displayable_token(s: str) -> bool:
+    if not s or not s.strip():
+        return False
+    s = s.strip()
+
+    if "\ufffd" in s:
+        return False
+    _MOJIBAKE_SUBSTRINGS = (
+        "Ã", "Â", "â€™", "â€œ", "â€", "Å", "ðŁ", "â", "Ê", "â€˜", "â€™", "â€œ", "â€\x9d",
+    )
+    if any(bad in s for bad in _MOJIBAKE_SUBSTRINGS):
+        return False
+
+    for c in s:
+        o = ord(c)
+        if o < 0x20 or o > 0x7E:
+            return False
+        if not c.isprintable():
+            return False
+
+    if not any(c.isalnum() for c in s):
+        return False
+    if len(s) == 1 and not s.isalnum():
+        return False
+    return True
+
+def clean_token(token: str) -> str | None:
+    """Clean individual token"""
+    if token in ["<|im_start|>", "<|im_end|>", "<|endoftext|>", "<s>", "</s>"]:
+        return None
+
+    cleaned = str(token).replace("Ċ", " ").replace("Ġ", "")
+    cleaned = _strip_bpe_markers(cleaned)
+    cleaned = re.sub(r"[\x00-\x1f\x7f-\x9f]", "", cleaned)
+    cleaned = unicodedata.normalize("NFKC", cleaned).strip()
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+    cleaned = re.sub(r"^[\s.,!?;:'\"()\[\]{}]+|[\s.,!?;:'\"()\[\]{}]+$", "", cleaned).strip()
+
+    if not cleaned:
+        return None
+    if cleaned in ",.!?;:'\"()-[]{}":
+        return None
+    if not is_displayable_token(cleaned):
+        return None
+
+    return cleaned
+
+def clean_tokens_and_weights(tokens: list, weights: np.ndarray, filter_neutral: bool = False, deduplicate: bool = False):
+    cleaned_tokens = []
+    cleaned_weights = []
+
+    for t, w in zip(tokens, weights):
+        ct = clean_token(t)
+        if ct is not None:
+            if filter_neutral and is_neutral_token(ct):
+                continue
+            cleaned_tokens.append(ct)
+            cleaned_weights.append(float(w))
+
+    if deduplicate:
+        accum = {}
+        for tok, w in zip(cleaned_tokens, cleaned_weights):
+            accum[tok] = accum.get(tok, 0.0) + w
+        cleaned_tokens = list(accum.keys())
+        cleaned_weights = list(accum.values())
+
+    return cleaned_tokens, np.array(cleaned_weights)
 
 def generate_html_highlight(token_texts, weights, target_token, save_path):
-    """生成漂亮的 HTML 文本高亮"""
-    # 归一化权重到 0-1
     w_min, w_max = np.min(weights), np.max(weights)
     if w_max > w_min:
         norm_weights = (weights - w_min) / (w_max - w_min)
@@ -48,8 +166,7 @@ def generate_html_highlight(token_texts, weights, target_token, save_path):
     for token, weight in zip(token_texts, norm_weights):
         clean = token.replace('Ġ', '').replace('Ċ', ' ').replace('<|im_start|>', '').strip()
         if not clean: continue
-        # 根据权重计算透明度 (红色系)
-        alpha = float(weight) * 0.85 # 限制最高不完全不透明
+        alpha = float(weight) * 0.85
         color = f"rgba(255, 0, 0, {alpha})"
         font_weight = "bold" if weight > 0.5 else "normal"
         html_content += f'<span class="word" style="background-color: {color}; font-weight: {font_weight};">{clean}</span> '
@@ -68,7 +185,6 @@ def plot_text_gradient(npz_path, output_dir):
     
     os.makedirs(output_dir, exist_ok=True)
     
-    # 1. 生成柱状图
     cleaned_tokens, cleaned_weights = clean_tokens_and_weights(
         token_texts, weights, filter_neutral=True, deduplicate=True
     )
@@ -96,7 +212,6 @@ def plot_text_gradient(npz_path, output_dir):
         plt.savefig(os.path.join(output_dir, f"{filename_base}_bar.png"), dpi=150)
         plt.close()
 
-    # 2. 生成 HTML 高亮
     html_path = os.path.join(output_dir, f"{filename_base}_highlight.html")
     generate_html_highlight(token_texts, weights, target_token, html_path)
 

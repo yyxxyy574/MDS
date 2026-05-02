@@ -107,7 +107,6 @@ def plot_radar_compass(data_list, save_dir):
 
     categories = ['Care', 'Fairness', 'Loyalty', 'Authority', 'Purity']
     N = len(categories)
-    # 基础弧度
     angles = [n / float(N) * 2 * pi for n in range(N)]
     angles_val = angles + angles[:1]
 
@@ -118,46 +117,34 @@ def plot_radar_compass(data_list, save_dir):
     fig, axes = plt.subplots(n_rows, n_cols, figsize=(5*n_cols, 5.5*n_rows), 
                              subplot_kw=dict(polar=True))
     fig.subplots_adjust(
-        wspace=0.002,  # 水平间距，减小值以减少间距
-        hspace=0.2   # 垂直间距，减小值以减少间距
+        wspace=0.002,
+        hspace=0.2
     )
     axes = np.atleast_1d(axes).flatten()
     
     for ax, model_type in zip(axes, models):
-        # 1. 设置坐标系：12点钟方向开始，顺时针
         ax.set_theta_offset(pi / 2)
         ax.set_theta_direction(-1)
-
-        # 2. 关键：清除默认标签，手动添加
         ax.set_xticks(angles)
-        ax.set_xticklabels([]) # 清空默认文字
+        ax.set_xticklabels([])
 
         for i, angle in enumerate(angles):
-            # 计算旋转角度（角度制）
-            # 顺时针坐标系下，切线旋转角 = -当前角度
             angle_deg = np.rad2deg(angle)
             rotation = -angle_deg 
             
-            # 防倒置逻辑：如果文字在左半球或底部，翻转180度提高可读性
+            # Prevent upside-down labels: rotate 180° when label is on left/bottom hemisphere
             if 90 < angle_deg % 360 < 270:
                 rotation += 180
-            
-            # 使用 ax.text 手动放置标签
-            # r=1.1 表示放在半径 1.0 之外一点点
             ax.text(angle, 1.15, categories[i], 
                     rotation=rotation,
-                    rotation_mode='anchor', # 确保旋转轴心正确
+                    rotation_mode='anchor',
                     ha='center', va='center',
                     size=30, fontweight='bold', color='#333333')
-
-        # 3. 辅助线与范围
         ax.set_rlabel_position(0)
         ax.set_ylim(0, 1.0)
         ax.set_yticks([0.4, 0.8])
         ax.set_yticklabels(["0.4", "0.8"], color="grey", size=14)
         ax.set_title(model_type, weight='black', size=32, pad=45)
-        
-        # 4. 绘图数据
         for modality in MODALITY_LIST:
             subset = df[(df['Model'] == model_type) & (df['Modality'] == modality)]
             if subset.empty: continue
@@ -262,15 +249,15 @@ def plot_robustness_scatter(data_list, save_dir):
     palette = sns.color_palette("bright", n_colors=len(models))
     model_color_map = dict(zip(models, palette))
     
-    # 画散点图
+    # Plot scatter points
     sns.scatterplot(
         data=df, x='Iter_Robustness', y='Context_Sensitivity',
         hue='Model', style='Modality', 
-        markers=markers_map, s=300, palette=model_color_map, # s=300 稍微把点也调大了
+        markers=markers_map, s=300, palette=model_color_map, # s=300 slightly increase marker size
         zorder=10
     )
 
-    # 画箭头 (逻辑保持不变)
+    # Draw arrows (logic unchanged)
     arrow_props = dict(color='gray', alpha=0.4, head_width=0.005, length_includes_head=True, zorder=1)
     for m in models:
         t = df[(df['Model']==m) & (df['Modality']=='Text')]
@@ -283,7 +270,7 @@ def plot_robustness_scatter(data_list, save_dir):
         xi, yi = i.iloc[0]['Iter_Robustness'], i.iloc[0]['Context_Sensitivity']
 
         line_color = model_color_map[m]
-        # 注意：如果箭头看起来太细，可以增加 head_width 或 width
+        # Note: increase head_width or width if arrows look too thin
         arrow_props = dict(color=line_color, alpha=0.6, head_width=0.003, length_includes_head=True, zorder=1)
 
         if not c.empty:
@@ -295,29 +282,18 @@ def plot_robustness_scatter(data_list, save_dir):
             # Text -> Image
             plt.arrow(xt, yt, xi-xt, yi-yt, linestyle='-', **arrow_props)        
 
-    # --- 修改部分开始 ---
 
-    # 1. 设置坐标轴标签字体大小
     plt.xlabel('Iterative Robustness', fontsize=22, fontweight='bold')
     plt.ylabel('Context Sensitivity', fontsize=22, fontweight='bold')
-
-    # 2. 设置刻度字体大小
     plt.tick_params(axis='both', which='major', labelsize=18)
-
     plt.grid(True, linestyle='--', alpha=0.75)
-
-    # 3. 设置 Legend 位置到左下角，并增大字体
-    # loc='lower left' 表示放在图内左下角
-    # framealpha=0.9 给图例加个半透明背景，防止遮挡住背后的网格线太乱
     plt.legend(
         loc='lower left', 
-        fontsize=16,           # 标签字体
-        title_fontsize=18,     # 标题字体
-        framealpha=0.9,        # 背景不透明度
-        borderpad=1            # 边框内边距
+        fontsize=16,
+        title_fontsize=18,
+        framealpha=0.9,
+        borderpad=1
     )
-    
-    # --- 修改部分结束 ---
 
     plt.tight_layout()
     plt.savefig(f"{save_dir}/general_robustness.pdf", dpi=300)
@@ -327,7 +303,6 @@ def plot_robustness_scatter(data_list, save_dir):
 def main():
     data_list = []
     
-    # Load all models
     for model_str in MODEL_LIST:
         prepare_results(model_str, data_list)
         

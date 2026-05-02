@@ -80,7 +80,7 @@ def load_all_stats():
             # append_data(data.get('global_stats'), all_global_stats)
             append_data(data.get('slopes'), all_slopes)
 
-            # [修改] 提取 Global Stats 时，同时将 global_fit 的数据分配进 DataFrame 中
+            # Extract Global Stats and assign global_fit data to DataFrame
             global_stats_list = data.get('global_stats')
             if global_stats_list:
                 df_global_tmp = pd.DataFrame(global_stats_list)
@@ -217,16 +217,16 @@ def plot_global_curve_by_model(df, output_dir):
 
     g.set(ylim=(-0.02, 1.05))
 
-    # 调整子图间距
+    # Adjust subplot spacing
     g.fig.subplots_adjust(
-        wspace=0.005,  # 水平间距，减小值以减少间距
-        hspace=0.2   # 垂直间距，减小值以减少间距
+        wspace=0.005,
+        hspace=0.2
     )
 
-    # 增大y轴标签和刻度大小
+    # Increase y-axis label and tick size
     for ax in g.axes:
-        ax.tick_params(axis='y', labelsize=18)  # 增大y轴刻度标签大小
-        ax.set_ylabel(ax.get_ylabel(), fontsize=20)  # 增大y轴标题大小
+        ax.tick_params(axis='y', labelsize=18)
+        ax.set_ylabel(ax.get_ylabel(), fontsize=20)
         
         ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
         ax.yaxis.get_offset_text().set_visible(False)
@@ -260,7 +260,6 @@ def plot_global_curve_by_model(df, output_dir):
     plt.savefig(save_path, bbox_inches='tight', dpi=300)
     plt.close()
     
-    # 恢复默认设置 (可选，避免影响后续画图)
     sns.set_context("notebook")
     print(f"Saved {save_path}")
 
@@ -327,10 +326,10 @@ def plot_global_curve_by_model_fit(df, output_dir):
 
     g.fig.subplots_adjust(wspace=0.05, hspace=0.85)
 
-    # 增大y轴标签和刻度大小
+    # Increase y-axis label and tick size
     for ax in g.axes:
-        ax.tick_params(axis='y', labelsize=20)  # 增大y轴刻度标签大小
-        ax.set_ylabel(ax.get_ylabel(), fontsize=22)  # 增大y轴标题大小
+        ax.tick_params(axis='y', labelsize=20)
+        ax.set_ylabel(ax.get_ylabel(), fontsize=22)
         ax.yaxis.set_label_coords(-0.18, 0.45)
         
         ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
@@ -338,19 +337,12 @@ def plot_global_curve_by_model_fit(df, output_dir):
         ax.ticklabel_format(style='plain', axis='y', useOffset=False)
 
         ax.tick_params(right=False, labelright=False)
-
-        # [调整] 将底部共用的 x 轴大标题向下推，避免和新增的文字重叠
-        # if ax.get_xlabel():
-        #     ax.set_xlabel(ax.get_xlabel(), labelpad=65)
-
-    # [新增] 在子图下方追加彩色文本行
     for i, (ax, model_name) in enumerate(zip(g.axes.flat, model_order)):
         model_df = df[df['Model'] == model_name]
         
-        # y轴相对起始点：从 x轴标签 之下开始
         row_idx = i // n_cols
         if row_idx == 0:
-            y_text_pos = -0.64   # 第一排： closer
+            y_text_pos = -0.64
         else:
             y_text_pos = -0.4
         
@@ -365,7 +357,6 @@ def plot_global_curve_by_model_fit(df, output_dir):
                     # text_str = f"{mod}: $S_{{max}}$={m_slope:.4f} ($R^2$={r2_val:.4f})"
                     text_str = f"$S_{{max}}$={m_slope:.4f} ($R^2$={r2_val:.4f})"
                     
-                    # 绘制带颜色的文本
                     ax.text(0.5, y_text_pos, text_str, 
                             transform=ax.transAxes, 
                             fontsize=18, 
@@ -374,7 +365,6 @@ def plot_global_curve_by_model_fit(df, output_dir):
                             va='top', 
                             fontweight='bold')
                     
-                    # 为下一行文本下移留出高度
                     y_text_pos -= 0.15
     
     target_ax_idx = n_cols - 1
@@ -405,7 +395,6 @@ def plot_global_curve_by_model_fit(df, output_dir):
     plt.savefig(save_path, bbox_inches='tight', dpi=300)
     plt.close()
     
-    # 恢复默认设置 (可选，避免影响后续画图)
     sns.set_context("notebook")
     print(f"Saved {save_path}")
 
@@ -447,7 +436,6 @@ def plot_dilemma_breakdown_per_model(df, output_dir):
         
         g.map(sns.lineplot, "Net_Benefit", "Action", marker="o", markersize=6)
         
-        # [MODIFIED] Add vertical line at 0
         g.map(plt.axvline, x=0, linestyle=':', color='gray', alpha=0.5, linewidth=1)
         
         g.set_titles("{col_name}", size=11, fontweight='bold')

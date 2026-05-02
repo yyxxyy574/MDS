@@ -173,10 +173,8 @@ def sample_positions(scene, dimension, dilemma, dilemma_instance, character_desc
                     is_ui_load[j] = True
 
             for j in range(quantity):
-                # place = random.choice(DILEMMA[dimension][dilemma][dilemma_instance]['character'][character]['place'])
                 character_inst = {
                     'type': character,
-                    # 'place': place,
                     'places': DILEMMA[dimension][dilemma][dilemma_instance]['character'][character]['place'].copy(),
                     'is_ui_load': is_ui_load[j],
                     'ui': ui,
@@ -444,7 +442,6 @@ def sample_same_quantities(scene, dimension, dilemma, dilemma_instance, characte
                         if place in SCENE[scene]:
                             pos_quantity += len(SCENE[scene][place]['pos'])
                     if min(DILEMMA[dimension][dilemma][dilemma_instance]['character'][character]['max_quantity'], pos_quantity) + bias < DILEMMA[dimension][dilemma][dilemma_instance]['character'][character]['min_quantity']:
-                        # quantity = min(DILEMMA[dimension][dilemma][dilemma_instance]['character'][character]['max_quantity'], pos_quantity) + bias
                         quantity = DILEMMA[dimension][dilemma][dilemma_instance]['character'][character]['min_quantity']
                     else:
                         quantity = random.randint(DILEMMA[dimension][dilemma][dilemma_instance]['character'][character]['min_quantity'], min(DILEMMA[dimension][dilemma][dilemma_instance]['character'][character]['max_quantity'], pos_quantity) + bias)

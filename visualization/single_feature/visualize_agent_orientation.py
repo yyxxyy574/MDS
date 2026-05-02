@@ -10,24 +10,24 @@ from config.constants import ROOT
 from visualization.utils import MODEL_LIST, MODALITY_LIST, parse_model_info
 
 # ==========================================
-# 配置与常量
+# Configuration and constants
 # ==========================================
 MORAL_DIMENSIONS = ['Care', 'Fairness', 'Loyalty', 'Authority', 'Purity']
 DIMENSION_PALETTE = {
-    'Care': '#4E79A7',       # 蓝色
-    'Fairness': '#F28E2B',   # 橙色
-    'Loyalty': '#E15759',    # 红色
-    'Authority': '#76B7B2',  # 青色
-    'Purity': '#59A14F'      # 绿色
+    'Care': '#4E79A7',
+    'Fairness': '#F28E2B',
+    'Loyalty': '#E15759',
+    'Authority': '#76B7B2',
+    'Purity': '#59A14F'
 }
 
-# 自定义排序顺序
+# Custom sort order
 CATEGORY_ORDER = [
     'Species', 'Profession', 'Age', 'Wealth', 
     'Gender', 'Education', 'Fitness', 'Color', 'Other'
 ]
 
-# 指定 Agent 在 Category 内部的特定顺序 (可选)
+# Specify custom order for agents in each category (optional)
 AGENT_INTERNAL_ORDER = {
     'Species': ['human', 'non-human'],
     'Profession': ['criminal', 'low', 'high'],
@@ -74,34 +74,29 @@ def get_sort_key(row):
     agent_rank = 999
     if row['category'] in AGENT_INTERNAL_ORDER:
         order_list = AGENT_INTERNAL_ORDER[row['category']]
-        # 模糊匹配：比如 "human" in "human"
         agent_clean = str(row['agent']).lower()
         for idx, target in enumerate(order_list):
             if target in agent_clean:
                 agent_rank = idx
                 break
     
-    # 3. 如果没有预定义顺序，按字母序
+    # If no predefined order, use alphabetical order
     return (cat_rank, agent_rank, row['agent'])
 
 def plot_grouped_stacked_orientation(df, save_dir):
     if df.empty:
         print("DataFrame is empty, skip plotting.")
         return
-
-    # 添加排序键
+    
     df['sort_tuple'] = df.apply(get_sort_key, axis=1)
     df = df.sort_values(by=['sort_tuple'])
-    
-    # 获取唯一的 Agent 顺序 (骨架)，包含 Category 和 Agent
-    # 必须保留 category，因为 'normal' 在 Wealth 和 Fitness 中都存在
+
     unique_agents_df = df[['category', 'agent', 'sort_tuple']].drop_duplicates().sort_values('sort_tuple')
-    
-    # 获取用于 X 轴标签的 agent 名称列表
+
     agents_ordered_labels = unique_agents_df['agent'].values
     
     models = df['model_type'].unique()
-    modes = ['Text', 'Caption', 'Image'] # 确保与 load_orientation_data 中的 mode.capitalize() 一致
+    modes = ['Text', 'Caption', 'Image']
     
     fig, axes = plt.subplots(len(models), 1, figsize=(20, 6 * len(models)), sharex=True)
     if len(models) == 1: axes = [axes]
@@ -118,22 +113,16 @@ def plot_grouped_stacked_orientation(df, save_dir):
         for mode in modes:
             subset = model_data[model_data['mode'] == mode]
             
-            # 【核心修复】：使用 category 和 agent 双重键构建骨架
-            # 这样 'Wealth-normal' 和 'Fitness-normal' 就是不同的行
             skeleton = unique_agents_df[['category', 'agent']].copy()
             
-            # 使用双键合并 (left join)
             subset_aligned = skeleton.merge(subset, on=['category', 'agent'], how='left').fillna(0)
             
-            # 准备堆叠数据
             bottoms = np.zeros(len(x_indices))
             
             for dim in MORAL_DIMENSIONS:
                 values = subset_aligned[dim].values
                 
-                # 安全检查：如果长度依然不匹配，说明数据源可能有其他问题（如重复行）
                 if len(values) != len(x_indices):
-                    # 尝试再次去重作为最后的防线
                     subset_aligned = subset_aligned.drop_duplicates(subset=['category', 'agent'])
                     values = subset_aligned[dim].values
                     if len(values) != len(x_indices):
@@ -159,16 +148,13 @@ def plot_grouped_stacked_orientation(df, save_dir):
         ax.set_ylim(0, 1.05)
         ax.grid(axis='y', linestyle='--', alpha=0.3)
         ax.set_xlim(-0.5, len(x_indices) - 0.5)
-        
-        # 绘制分类分隔线
+
         cat_series = unique_agents_df['category'].values
         for i in range(1, len(cat_series)):
             if cat_series[i] != cat_series[i-1]:
                 ax.axvline(i - 0.5, color='gray', linestyle=':', alpha=0.5)
-                # 可选：在上方添加类别标签
                 ax.text(i - 0.5, 1.02, cat_series[i], ha='center', fontsize=9, fontweight='bold', color='gray')
 
-    # 全局图例
     dim_handles = [mpatches.Patch(color=DIMENSION_PALETTE[d], label=d) for d in MORAL_DIMENSIONS]
     mode_handles = [
         mpatches.Patch(facecolor='white', edgecolor='black', hatch='', label='Text'),
@@ -198,16 +184,14 @@ def main():
     if not os.path.exists(vis_dir): os.makedirs(vis_dir)
 
     all_data = []
-    
-    # 遍历 MODEL_LIST
+
     for model_str in MODEL_LIST:
         model_data = load_orientation_data(model_str, analyze_dir)
         if model_data:
             all_data.extend(model_data)
     
     df = pd.DataFrame(all_data)
-    
-    # 可选：全局去重，防止 parse_model_info 导致名字重复时的数据重复
+
     if not df.empty:
         df = df.drop_duplicates(subset=['model_type', 'mode', 'category', 'agent'])
 

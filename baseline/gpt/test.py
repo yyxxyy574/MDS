@@ -15,7 +15,6 @@ def chat(api_key, model_name, content, image_bytes=None, max_tokens=128):
     Args:
         max_tokens (int): Maximum number of tokens to generate. 
     """
-    # Changed to OpenAI official endpoint
     invoke_url = "https://api.openai.com/v1/chat/completions"
     
     headers = {
@@ -37,8 +36,6 @@ def chat(api_key, model_name, content, image_bytes=None, max_tokens=128):
             {
                 "type": "image_url",
                 "image_url": {
-                    # OpenAI supports "detail": "auto" | "low" | "high". 
-                    # Default is auto. Keeping it simple for consistency.
                     "url": f"data:image/jpeg;base64,{base64_image}"
                 }
             }
@@ -59,8 +56,6 @@ def chat(api_key, model_name, content, image_bytes=None, max_tokens=128):
         "top_p": 1.0,
         "max_tokens": max_tokens, # Dynamic max_tokens based on prompt type
         "stream": False
-        # Note: OpenAI API does not expose parameters to explicitly disable safety filters 
-        # (unlike Google's safety_settings). Safety behaviors are handled server-side.
     }
 
     # 2. Generate Content with Retry Logic
@@ -84,7 +79,6 @@ def chat(api_key, model_name, content, image_bytes=None, max_tokens=128):
                     continue
                 else:
                     # Client errors (400) usually shouldn't be retried blindly (e.g., policy violations)
-                    # For GPT-4o, 400 might indicate a safety refusal at the request level
                     time.sleep(2)
                     continue
 

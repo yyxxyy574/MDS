@@ -8,36 +8,6 @@ from scipy.optimize import curve_fit
 
 from config.constants import ROOT
 
-# def parse_quantity_info(q_str):
-#     """
-#     Parse 'XvsY' string to extract Cost, Benefit, and Net Benefit.
-#     Assumption: Format is 'Sacrifice vs Saved' (Cost vs Benefit).
-    
-#     Examples:
-#         '1vs5' -> Sacrifice 1, Save 5 -> Net Benefit = 4
-#         '5vs1' -> Sacrifice 5, Save 1 -> Net Benefit = -4
-#         '1vs1' -> Net Benefit = 0
-#     """
-#     try:
-#         # Handle cases where it might already be a number (rare)
-#         if isinstance(q_str, (int, float)):
-#             return 0, 0, 0 
-
-#         # Extract all numbers from string
-#         nums = [int(x) for x in re.findall(r'\d+', str(q_str))]
-        
-#         if len(nums) >= 2:
-#             cost = nums[0]
-#             benefit = nums[1]
-#             net_benefit = benefit - cost
-#             return cost, benefit, net_benefit
-#         elif len(nums) == 1:
-#             # Fallback for old formats if any, though likely not useful for this analysis
-#             return nums[0], 0, 0
-#         return 0, 0, 0
-#     except:
-#         return 0, 0, 0
-
 def parse_quantity_info(q_str):
     """
     Parse 'XvsY' string to extract Cost, Benefit, and Log Ratio.
@@ -51,7 +21,6 @@ def parse_quantity_info(q_str):
         if len(nums) >= 2:
             cost = nums[0]
             benefit = nums[1]
-            # [修改] 计算以10为底的 Log Ratio
             if cost > 0 and benefit > 0:
                 log_ratio = np.log10(benefit / cost)
             else:
@@ -64,7 +33,6 @@ def parse_quantity_info(q_str):
         return 0, 0, 0.0
 
 def sigmoid(x, L, x0, k, b):
-    # np.clip 防止指数爆炸 (overflow)
     x_norm = np.clip(-k * (x - x0), -500, 500)
     return L / (1 + np.exp(x_norm)) + b
 
@@ -109,8 +77,6 @@ def analyze_model(model_name, mode):
                     val = 1 if raw_ans == 1 else 0
                     
                     q_str = res.get('quantity_level', '')
-                    # [MODIFIED] Use new parsing logic
-                    # cost, benefit, net_benefit = parse_quantity_info(q_str)
                     cost, benefit, log_ratio = parse_quantity_info(q_str)
                     
                     # Filter out invalid parses if necessary, but keep 0 (1vs1)
@@ -120,7 +86,6 @@ def analyze_model(model_name, mode):
                             'Instance': inst_key,
                             'Cost': cost,
                             'Benefit': benefit,
-                            # 'Net_Benefit': net_benefit, # [NEW] Key metric for analysis
                             'Log_Ratio': log_ratio,
                             'Action': val
                         })
@@ -191,11 +156,8 @@ def analyze_model(model_name, mode):
 
     if len(np.unique(x_global)) >= 4:
         try:
-            # 初始猜测参数：对于 Log-Ratio，中心点 x0 猜测为 0.0 (即 1:1)
             p0 = [max(y_global) - min(y_global), 0.0, 2.0, min(y_global)]
-            # 设定合理的边界：x0在[-1.5, 1.5]之间，k允许为负但不超过20
             bounds = ([0, -1.5, -20, 0], [1.1, 1.5, 20, 1.1])
-            
             popt, pcov = curve_fit(sigmoid, x_global, y_global, p0=p0, bounds=bounds, maxfev=10000)
             y_fit = sigmoid(x_global, *popt)
             
@@ -203,7 +165,7 @@ def analyze_model(model_name, mode):
             ss_res_g = np.sum((y_global - y_fit)**2)
             r2_g = 1 - (ss_res_g / ss_tot_g) if ss_tot_g != 0 else 0
             
-            # [关键] 计算真正的最大敏感度 Max Slope
+
             L_val = float(popt[0])
             k_val = float(popt[2])
             max_slope_val = (L_val * k_val) / 4.0

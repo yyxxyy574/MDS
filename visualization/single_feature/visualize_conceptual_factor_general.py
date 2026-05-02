@@ -37,28 +37,21 @@ def plot_dumbbell_scheme_a(df_p, save_dir, target_factor='Self Benefit'):
     """
     print(f"Generating Scheme A (Dumbbell) for {target_factor}...")
     
-    # 1. 数据准备
     df_sub = df_p[
         (df_p['factor'] == target_factor) & 
-        (df_p['dilemma'] == 'total') # 使用 pooled 结果
+        (df_p['dilemma'] == 'total')
     ].copy()
     
     if df_sub.empty:
         print(f"No data for {target_factor}")
         return
 
-    # 使用全局定义的 MODEL_TYPE_LIST 顺序 (假设前4个是Open，后2个是Proprietary)
     available_models = set(df_sub['model_type'].unique())
     sorted_models = [m for m in MODEL_TYPE_LIST if m in available_models]
     
-    # 设置画布
-    fig, ax = plt.subplots(figsize=(8, 6)) # 适合半栏的比例
-    
-    # 2. 绘制线条和点
+    fig, ax = plt.subplots(figsize=(8, 6))
     for i, model in enumerate(sorted_models):
         model_data = df_sub[df_sub['model_type'] == model]
-        
-        # 获取各模态的值
         val_text = model_data[model_data['modality'] == 'Text']['log_odds'].values
         val_cap = model_data[model_data['modality'] == 'Caption']['log_odds'].values
         val_img = model_data[model_data['modality'] == 'Image']['log_odds'].values
@@ -67,72 +60,32 @@ def plot_dumbbell_scheme_a(df_p, save_dir, target_factor='Self Benefit'):
         val_cap = val_cap[0] if len(val_cap) > 0 else np.nan
         val_img = val_img[0] if len(val_img) > 0 else np.nan
         
-        # # --- 绘制连线 (Segments) ---
-        
-        # # Segment 1: Text -> Caption (Context Shift)
-        # if not np.isnan(val_text) and not np.isnan(val_cap):
-        #     ax.plot([val_text, val_cap], [i, i], 
-        #             color=LINE_COLORS['Context'], alpha=0.6, zorder=1, lw=2)
-            
-        # # Segment 2: Caption -> Image (Modality Shift)
-        # if not np.isnan(val_cap) and not np.isnan(val_img):
-        #     ax.plot([val_cap, val_img], [i, i], 
-        #             color=LINE_COLORS['Modality'], alpha=0.6, zorder=1, lw=2)
-
-        # --- 绘制点 (Markers) ---
-        
-        # Text Point
         ax.scatter(val_text, i, color=MODALITY_PALETTE['Text'], marker=MODALITY_MARKERS['Text'], 
                    s=100, zorder=3, label='Text' if i == 0 else "")
-        
-        # Caption Point
         ax.scatter(val_cap, i, color=MODALITY_PALETTE['Caption'], marker=MODALITY_MARKERS['Caption'], 
                    s=80, zorder=3, label='Caption' if i == 0 else "")
-        
-        # Image Point
         ax.scatter(val_img, i, color=MODALITY_PALETTE['Image'], marker=MODALITY_MARKERS['Image'], 
                    s=120, zorder=3, label='Image' if i == 0 else "")
-
-    # 3. 添加分隔线和标注 (Open/Proprietary)
     if len(sorted_models) >= 5: 
         split_index = 3.5
         ax.axhline(y=split_index, color='black', linestyle='--', linewidth=1, alpha=0.5)
-        
-        # Open-Weight 标注
         ax.text(1.02, 1.5, 'Open-Weight', transform=ax.get_yaxis_transform(), 
                 rotation=270, va='center', ha='left', fontsize=12, fontweight='bold', color='#555555')
-        
-        # Proprietary 标注
         ax.text(1.02, 4.5, 'Proprietary', transform=ax.get_yaxis_transform(), 
                 rotation=270, va='center', ha='left', fontsize=12, fontweight='bold', color='#555555')
-
-    # 4. 美化
     ax.set_yticks(range(len(sorted_models)))
     ax.set_yticklabels(sorted_models, fontsize=11, fontweight='bold')
     ax.set_xlabel('Log Odds (Regression Coefficient)', fontsize=12)
-    
-    # 翻转 Y 轴，让列表第一个元素(Open-Weight)在顶部
     ax.invert_yaxis()
     
-    # 标题
     readable_title = target_factor.replace("_", " ").title()
     ax.set_title(f"Visual Shift in {readable_title}", fontsize=14, fontweight='bold', pad=15)
-    
-    # 垂直零线
     ax.axvline(0, color='black', linestyle='--', alpha=0.5)
-    
-    # 5. 更新图例 (包含点和线)
     handles = [
-        # Dots
         mlines.Line2D([], [], color=MODALITY_PALETTE['Text'], marker=MODALITY_MARKERS['Text'], linestyle='None', markersize=8, label='Text'),
         mlines.Line2D([], [], color=MODALITY_PALETTE['Caption'], marker=MODALITY_MARKERS['Caption'], linestyle='None', markersize=8, label='Caption'),
         mlines.Line2D([], [], color=MODALITY_PALETTE['Image'], marker=MODALITY_MARKERS['Image'], linestyle='None', markersize=8, label='Image'),
-        # # Gaps (Lines) - 使用空数据创建图例项
-        # mlines.Line2D([], [], color=LINE_COLORS['Context'], linewidth=2, label='Context Shift (Text→Cap)'),
-        # mlines.Line2D([], [], color=LINE_COLORS['Modality'], linewidth=2, label='Modality Shift (Cap→Img)')
     ]
-    
-    # 调整图例列数，使其美观 (3列可能放不下5个，改用2列或者3列)
     ax.legend(
         handles=handles,
         loc='upper center',
@@ -144,7 +97,6 @@ def plot_dumbbell_scheme_a(df_p, save_dir, target_factor='Self Benefit'):
         columnspacing=1.2
     )
     
-    # 保存
     plt.tight_layout()
     safe_name = target_factor.lower().replace(" ", "_")
     plt.savefig(f'{save_dir}/scheme_A_dumbbell_{safe_name}.pdf', bbox_inches='tight', dpi=300)
@@ -157,8 +109,6 @@ def plot_combined_dumbbell(df_p, save_dir):
     """
     factors = ['Intention of Harm', 'Self Benefit']
     print(f"Generating Combined Dumbbell Plot for {factors}...")
-    
-    # 1. 数据过滤与准备
     df_sub = df_p[
         (df_p['factor'].isin(factors)) & 
         (df_p['dilemma'] == 'total')
@@ -168,27 +118,20 @@ def plot_combined_dumbbell(df_p, save_dir):
         print("No data found for target factors.")
         return
 
-    # 排序模型 (Open -> Proprietary)
     available_models = set(df_sub['model_type'].unique())
     sorted_models = [m for m in MODEL_TYPE_LIST if m in available_models]
     
-    # 2. 设置画布: 1行2列, 共用Y轴
-    # figsize=(10, 5) 既保证了宽度适中(适合半栏+斜体字)，又保证了高度足够容纳大字体
     fig, axes = plt.subplots(1, 2, figsize=(10, 6.5), sharey=True)
-    plt.subplots_adjust(wspace=0.002) # 极窄的子图间距
+    plt.subplots_adjust(wspace=0.002)
     
-    # 3. 循环绘制每个因子
     for ax_idx, (ax, factor) in enumerate(zip(axes, factors)):
         factor_data = df_sub[df_sub['factor'] == factor]
-        
-        # 绘制背景网格
         ax.grid(axis='x', linestyle='--', alpha=0.3)
         ax.set_axisbelow(True)
 
         for i, model in enumerate(sorted_models):
             model_data = factor_data[factor_data['model_type'] == model]
             
-            # 提取数据 (安全获取)
             def get_val(mod):
                 vals = model_data[model_data['modality'] == mod]['log_odds'].values
                 return vals[0] if len(vals) > 0 else np.nan
@@ -196,85 +139,45 @@ def plot_combined_dumbbell(df_p, save_dir):
             val_text = get_val('Text')
             val_cap = get_val('Caption')
             val_img = get_val('Image')
-            
-            # # --- 绘制连线 (加粗 lw=3) ---
-            # if not np.isnan(val_text) and not np.isnan(val_cap):
-            #     ax.plot([val_text, val_cap], [i, i], 
-            #             color=LINE_COLORS['Context'], alpha=0.7, zorder=2, lw=3)
-            
-            # if not np.isnan(val_cap) and not np.isnan(val_img):
-            #     ax.plot([val_cap, val_img], [i, i], 
-            #             color=LINE_COLORS['Modality'], alpha=0.7, zorder=2, lw=3)
-
-            # --- 绘制点 (加大 s=180) ---
             ax.scatter(val_text, i, color=MODALITY_PALETTE['Text'], marker=MODALITY_MARKERS['Text'], 
                        s=250, zorder=3, edgecolors='white', linewidth=1.2, label='Text' if i==0 else "")
             ax.scatter(val_cap, i, color=MODALITY_PALETTE['Caption'], marker=MODALITY_MARKERS['Caption'], 
                        s=250, zorder=3, edgecolors='white', linewidth=1.2, label='Caption' if i==0 else "")
             ax.scatter(val_img, i, color=MODALITY_PALETTE['Image'], marker=MODALITY_MARKERS['Image'], 
                        s=250, zorder=3, edgecolors='white', linewidth=1.2, label='Image' if i==0 else "")
-
-        # --- 添加分隔线 (Open vs Proprietary) ---
         if len(sorted_models) >= 5:
             split_index = 3.5
             ax.axhline(y=split_index, color='gray', linestyle='--', linewidth=3, alpha=0.6)
 
-        # --- 内部标题 (替代 ax.set_title) ---
-        # 根据因子名称放置在图表上方内部，节省外部空间
         panel_label = f"({chr(ord('a') + ax_idx)})"
         readable_title = f"{panel_label} {factor.replace('_', ' ').title()}"
         ax.text(0.5, 1.09, readable_title, transform=ax.transAxes, 
                 ha='center', va='top', fontsize=24, fontweight='bold', 
                 bbox=dict(facecolor='white', alpha=0.9, edgecolor='none', pad=2))
-
-        # --- 坐标轴美化 ---
         ax.set_yticks(range(len(sorted_models)))
         if ax_idx == 0:
-            ax.invert_yaxis() # 只需翻转一次
+            ax.invert_yaxis()
         
-        # 垂直零线
         ax.axvline(0, color='black', linestyle='-', linewidth=4, alpha=0.4)
-        
-        # X轴标签
         ax.tick_params(axis='x', labelsize=19)
         ax.set_xlabel('Log Odds', fontsize=21, fontweight='bold')
-
-    # 4. 全局修饰
-    
-    # --- Y轴标签斜着排 (Slanted Labels) ---
-    # ha='right' 保证文字尾部对齐坐标轴
     axes[0].set_yticklabels(sorted_models, fontsize=18, fontweight='bold', rotation=20, ha='right')
-    axes[0].tick_params(axis='y', pad=0) # 减少标签与轴的距离
-    
-    # 第二个图隐藏 Y 轴刻度
+    axes[0].tick_params(axis='y', pad=0)
     axes[1].tick_params(left=False, labelleft=False)
-
-    # --- 标注 Open-Weight / Proprietary ---
-    # 放在最右侧图表的右边
     axes[1].text(1.02, 1.5, 'Open-Weight', transform=axes[1].get_yaxis_transform(), 
             rotation=270, va='center', ha='left', fontsize=20, fontweight='bold', color='#555555')
     axes[1].text(1.02, 4.5, 'Proprietary', transform=axes[1].get_yaxis_transform(), 
             rotation=270, va='center', ha='left', fontsize=20, fontweight='bold', color='#555555')
-
-    # --- 统一图例 (Inside Axis) ---
-    # 创建自定义 Handles
     legend_handles = [
         mlines.Line2D([], [], color=MODALITY_PALETTE['Text'], marker=MODALITY_MARKERS['Text'], linestyle='None', markersize=18, label='Text'),
         mlines.Line2D([], [], color=MODALITY_PALETTE['Caption'], marker=MODALITY_MARKERS['Caption'], linestyle='None', markersize=18, label='Caption'),
         mlines.Line2D([], [], color=MODALITY_PALETTE['Image'], marker=MODALITY_MARKERS['Image'], linestyle='None', markersize=18, label='Image'),
-        # mlines.Line2D([], [], color=LINE_COLORS['Context'], linewidth=3, label='Context Shift'),
-        # mlines.Line2D([], [], color=LINE_COLORS['Modality'], linewidth=3, label='Modality Shift')
     ]
-    
-    # 将图例放在第一个子图的右下角 (或者根据数据分布选择较空的位置)
-    # loc='lower right' 通常是个好位置
     axes[0].legend(handles=legend_handles, loc='lower left', 
                    fontsize=18, frameon=True, framealpha=0.9, 
                    edgecolor='gray', ncol=1, bbox_to_anchor=(0.02, 0.02))
 
-    # 保存
     plt.tight_layout()
-    # 再次微调，给斜体字留出左边距
     plt.subplots_adjust(left=0.1, top=0.75) 
     
     save_path = f'{save_dir}/combined_dumbbell_slanted.pdf'
@@ -289,7 +192,6 @@ def plot_slope_scheme_b(df_p, save_dir, target_factor='Intention of Harm'):
     """
     print(f"Generating Scheme B (Grouped Slope) for {target_factor}...")
 
-    # 1. 数据准备
     df_sub = df_p[
         (df_p['factor'] == target_factor) & 
         (df_p['dilemma'] == 'total')
@@ -303,50 +205,40 @@ def plot_slope_scheme_b(df_p, save_dir, target_factor='Intention of Harm'):
     categories = ['Open-Weight', 'Proprietary']
     df_sub['category'] = df_sub['model_type'].map(MODEL_CATEGORY_MAP)
     
-    # 统一 Y 轴范围以便对比
     y_min = df_sub['log_odds'].min() - 0.5
     y_max = df_sub['log_odds'].max() + 0.5
 
     for ax, cat in zip(axes, categories):
         cat_data = df_sub[df_sub['category'] == cat]
         
-        # 如果该类别没数据，跳过
         if cat_data.empty:
             ax.set_title(cat)
             continue
 
-        # 对每个模型画线
         unique_models = cat_data['model_type'].unique()
         
         for model in unique_models:
             model_df = cat_data[cat_data['model_type'] == model]
             
-            # 确保顺序 Text -> Caption -> Image
             model_df = model_df.set_index('modality').reindex(MODALITY_LIST).reset_index()
             
-            # 准备数据
             x_vals = range(len(MODALITY_LIST))
             y_vals = model_df['log_odds'].values
             
-            # 绘制折线
-            # 可以给不同模型不同颜色，或者统一颜色
             line = ax.plot(x_vals, y_vals, marker='o', linewidth=2, label=model)
             color = line[0].get_color()
             
-            # 在终点 (Image) 旁边标注模型名字
             if not np.isnan(y_vals[-1]):
                 ax.text(2.1, y_vals[-1], model, va='center', fontsize=9, color=color, fontweight='bold')
 
-        # 设置轴
         ax.set_xticks(range(len(MODALITY_LIST)))
         ax.set_xticklabels(MODALITY_LIST)
         ax.set_title(f"{cat} Models", fontsize=12, fontweight='bold')
         ax.grid(axis='y', linestyle='--', alpha=0.5)
         ax.axhline(0, color='black', linewidth=1)
-        ax.set_xlim(-0.2, 2.8) # 留出右侧写字的空间
+        ax.set_xlim(-0.2, 2.8)
         ax.set_ylim(y_min, y_max)
 
-    # 3. 全局设置
     axes[0].set_ylabel('Log Odds (Effect Strength)', fontsize=12)
     
     readable_title = target_factor.replace("_", " ").title()
@@ -604,7 +496,6 @@ def plot_interaction_per_factor_subplots(df_p, save_dir, target_dilemma='total')
         
         print(f"Saved detail plot: {filename}")
 
-# ================= 集成到 Main =================
 
 def main():
     result_path = f"{ROOT}/../results/single_feature/analyze_results"
@@ -624,13 +515,11 @@ def main():
     viz_dir = f'{ROOT}/../visualization/single_feature/conceptual_factor_general'
     os.makedirs(viz_dir, exist_ok=True)
     
-    # 执行方案 A (分别针对两个变量)
     # plot_dumbbell_scheme_a(df_p, viz_dir, target_factor='Self Benefit')
     # plot_dumbbell_scheme_a(df_p, viz_dir, target_factor='Intention of Harm')
     # plot_dumbbell_scheme_a(df_p, viz_dir, target_factor='Personal Force')
     plot_combined_dumbbell(df_p, viz_dir)
     
-    # 执行方案 B (分别针对两个变量)
     # plot_slope_scheme_b(df_p, viz_dir, target_factor='Self Benefit')
     # plot_slope_scheme_b(df_p, viz_dir, target_factor='Intention of Harm')
 
