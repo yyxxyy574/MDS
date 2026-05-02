@@ -5,224 +5,231 @@ data_info:
   refusals: 0
   refusal_rate: 0.0
   valid_samples: 2105
+global_fit:
+  L: 0.7181413800807421
+  x0: 0.08177420076026941
+  k: 6.109924430881431
+  b: 0.20842922864624427
+  max_slope: 1.0969473907455585
+  R2: 0.995648067285599
 dilemma_stats:
 - Dilemma: crying_baby
-  Net_Benefit: -9
+  Log_Ratio: -1.0
   Action: 0.15
 - Dilemma: crying_baby
-  Net_Benefit: -4
+  Log_Ratio: -0.6989700043360187
   Action: 0.125
 - Dilemma: crying_baby
-  Net_Benefit: -1
+  Log_Ratio: -0.3010299956639812
   Action: 0.15
 - Dilemma: crying_baby
-  Net_Benefit: 0
+  Log_Ratio: 0.0
   Action: 0.275
 - Dilemma: crying_baby
-  Net_Benefit: 1
+  Log_Ratio: 0.3010299956639812
   Action: 0.725
 - Dilemma: crying_baby
-  Net_Benefit: 4
+  Log_Ratio: 0.6989700043360189
   Action: 0.85
 - Dilemma: crying_baby
-  Net_Benefit: 9
+  Log_Ratio: 1.0
   Action: 0.95
 - Dilemma: environmental_policy
-  Net_Benefit: -9
+  Log_Ratio: -1.0
   Action: 0.025
 - Dilemma: environmental_policy
-  Net_Benefit: -4
+  Log_Ratio: -0.6989700043360187
   Action: 0.05
 - Dilemma: environmental_policy
-  Net_Benefit: -1
+  Log_Ratio: -0.3010299956639812
   Action: 0.0
 - Dilemma: environmental_policy
-  Net_Benefit: 0
+  Log_Ratio: 0.0
   Action: 0.2
 - Dilemma: environmental_policy
-  Net_Benefit: 1
+  Log_Ratio: 0.3010299956639812
   Action: 0.775
 - Dilemma: environmental_policy
-  Net_Benefit: 4
+  Log_Ratio: 0.6989700043360189
   Action: 0.9
 - Dilemma: environmental_policy
-  Net_Benefit: 9
+  Log_Ratio: 1.0
   Action: 0.9
 - Dilemma: footbridge
-  Net_Benefit: -4
+  Log_Ratio: -0.6989700043360187
   Action: 0.025
 - Dilemma: footbridge
-  Net_Benefit: -1
+  Log_Ratio: -0.3010299956639812
   Action: 0.025
 - Dilemma: footbridge
-  Net_Benefit: 0
+  Log_Ratio: 0.0
   Action: 0.025
 - Dilemma: footbridge
-  Net_Benefit: 1
+  Log_Ratio: 0.3010299956639812
   Action: 0.875
 - Dilemma: footbridge
-  Net_Benefit: 4
+  Log_Ratio: 0.6989700043360189
   Action: 1.0
 - Dilemma: footbridge
-  Net_Benefit: 9
+  Log_Ratio: 1.0
   Action: 1.0
 - Dilemma: lifeboat
-  Net_Benefit: -1
+  Log_Ratio: -0.3010299956639812
   Action: 0.875
 - Dilemma: lifeboat
-  Net_Benefit: 0
+  Log_Ratio: 0.0
   Action: 0.975
 - Dilemma: lifeboat
-  Net_Benefit: 1
+  Log_Ratio: 0.3010299956639812
   Action: 0.975
 - Dilemma: lifeboat
-  Net_Benefit: 4
+  Log_Ratio: 0.6989700043360189
   Action: 1.0
 - Dilemma: lifeboat
-  Net_Benefit: 9
+  Log_Ratio: 1.0
   Action: 1.0
 - Dilemma: shark_attack
-  Net_Benefit: -9
+  Log_Ratio: -1.0
   Action: 0.675
 - Dilemma: shark_attack
-  Net_Benefit: -4
+  Log_Ratio: -0.6989700043360187
   Action: 0.825
 - Dilemma: shark_attack
-  Net_Benefit: -1
+  Log_Ratio: -0.3010299956639812
   Action: 0.8
 - Dilemma: shark_attack
-  Net_Benefit: 0
+  Log_Ratio: 0.0
   Action: 0.925
 - Dilemma: shark_attack
-  Net_Benefit: 1
+  Log_Ratio: 0.3010299956639812
   Action: 0.975
 - Dilemma: shark_attack
-  Net_Benefit: 4
+  Log_Ratio: 0.6989700043360189
   Action: 1.0
 - Dilemma: shark_attack
-  Net_Benefit: 9
+  Log_Ratio: 1.0
   Action: 1.0
 - Dilemma: terrorist
-  Net_Benefit: 0
+  Log_Ratio: 0.0
   Action: 1.0
 - Dilemma: terrorist
-  Net_Benefit: 1
+  Log_Ratio: 0.3010299956639812
   Action: 1.0
 - Dilemma: terrorist
-  Net_Benefit: 4
+  Log_Ratio: 0.6989700043360189
   Action: 1.0
 - Dilemma: terrorist
-  Net_Benefit: 9
+  Log_Ratio: 1.0
   Action: 1.0
 - Dilemma: transplant
-  Net_Benefit: 0
+  Log_Ratio: 0.0
   Action: 0.35
 - Dilemma: transplant
-  Net_Benefit: 1
+  Log_Ratio: 0.3010299956639812
   Action: 0.325
 - Dilemma: transplant
-  Net_Benefit: 4
+  Log_Ratio: 0.6989700043360189
   Action: 0.42500000000000004
 - Dilemma: trolley
-  Net_Benefit: -9
+  Log_Ratio: -1.0
   Action: 0.175
 - Dilemma: trolley
-  Net_Benefit: -4
+  Log_Ratio: -0.6989700043360187
   Action: 0.125
 - Dilemma: trolley
-  Net_Benefit: -1
+  Log_Ratio: -0.3010299956639812
   Action: 0.05
 - Dilemma: trolley
-  Net_Benefit: 0
+  Log_Ratio: 0.0
   Action: 0.30000000000000004
 - Dilemma: trolley
-  Net_Benefit: 1
+  Log_Ratio: 0.3010299956639812
   Action: 0.95
 - Dilemma: trolley
-  Net_Benefit: 4
+  Log_Ratio: 0.6989700043360189
   Action: 0.95
 - Dilemma: trolley
-  Net_Benefit: 9
+  Log_Ratio: 1.0
   Action: 0.95
 - Dilemma: vaccine_policy
-  Net_Benefit: -9
+  Log_Ratio: -1.0
   Action: 0.025
 - Dilemma: vaccine_policy
-  Net_Benefit: -4
+  Log_Ratio: -0.6989700043360187
   Action: 0.1
 - Dilemma: vaccine_policy
-  Net_Benefit: -1
+  Log_Ratio: -0.3010299956639812
   Action: 0.07500000000000001
 - Dilemma: vaccine_policy
-  Net_Benefit: 0
+  Log_Ratio: 0.0
   Action: 0.175
 - Dilemma: vaccine_policy
-  Net_Benefit: 1
+  Log_Ratio: 0.3010299956639812
   Action: 0.525
 - Dilemma: vaccine_policy
-  Net_Benefit: 4
+  Log_Ratio: 0.6989700043360189
   Action: 0.7250000000000001
 - Dilemma: vaccine_policy
-  Net_Benefit: 9
+  Log_Ratio: 1.0
   Action: 0.825
 global_stats:
-- Net_Benefit: -9
+- Log_Ratio: -1.0
   Action: 0.21000000000000002
-- Net_Benefit: -4
+- Log_Ratio: -0.6989700043360187
   Action: 0.20833333333333334
-- Net_Benefit: -1
+- Log_Ratio: -0.3010299956639812
   Action: 0.28214285714285714
-- Net_Benefit: 0
+- Log_Ratio: 0.0
   Action: 0.4694444444444444
-- Net_Benefit: 1
+- Log_Ratio: 0.3010299956639812
   Action: 0.7916666666666666
-- Net_Benefit: 4
+- Log_Ratio: 0.6989700043360189
   Action: 0.8722222222222222
-- Net_Benefit: 9
+- Log_Ratio: 1.0
   Action: 0.953125
 slopes:
 - Dilemma: crying_baby
-  Slope: 0.05446428571428572
-  Intercept: 0.46071428571428574
-  R2: 0.7257857779759251
+  Slope: 0.4685492652753271
+  Intercept: 0.4607142857142856
+  R2: 0.8655664118332971
   Points: 7
 - Dilemma: environmental_policy
-  Slope: 0.061479591836734696
-  Intercept: 0.4071428571428573
-  R2: 0.6714100756016923
+  Slope: 0.5390217617327575
+  Intercept: 0.4071428571428571
+  R2: 0.8316556556930915
   Points: 7
 - Dilemma: footbridge
-  Slope: 0.09187192118226598
-  Intercept: 0.3538587848932676
-  R2: 0.6504566896738733
+  Slope: 0.7258684262893316
+  Intercept: 0.37068859561844464
+  R2: 0.7967539218046413
   Points: 6
 - Dilemma: lifeboat
-  Slope: 0.008512269938650344
-  Intercept: 0.942868098159509
-  R2: 0.43947068055357474
+  Slope: 0.08198367548309046
+  Intercept: 0.9371424389018019
+  R2: 0.6830723478794207
   Points: 5
 - Dilemma: shark_attack
-  Slope: 0.01938775510204083
-  Intercept: 0.885714285714286
-  R2: 0.8089635854341737
+  Slope: 0.1583101969325163
+  Intercept: 0.8857142857142857
+  R2: 0.8691540223745997
   Points: 7
 - Dilemma: terrorist
-  Slope: 4.519653439696475e-18
-  Intercept: 1.0
+  Slope: -9.904536314105885e-19
+  Intercept: 0.9999999999999997
   R2: 0.0
   Points: 4
 - Dilemma: transplant
-  Slope: 0.022115384615384617
-  Intercept: 0.32980769230769236
-  R2: 0.7825443786982256
+  Slope: 0.11482990364260093
+  Intercept: 0.32839003211913304
+  R2: 0.598465201154885
   Points: 3
 - Dilemma: trolley
-  Slope: 0.05701530612244898
-  Intercept: 0.5000000000000001
-  R2: 0.5812050589905289
+  Slope: 0.5137410478684762
+  Intercept: 0.4999999999999999
+  R2: 0.7603963844884664
   Points: 7
 - Dilemma: vaccine_policy
-  Slope: 0.05178571428571429
-  Intercept: 0.3500000000000001
-  R2: 0.7830540037243947
+  Slope: 0.43450441999401584
+  Intercept: 0.35
+  R2: 0.8883113554559199
   Points: 7

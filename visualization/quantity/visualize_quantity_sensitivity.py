@@ -5,6 +5,7 @@ import matplotlib.ticker as mtick
 import seaborn as sns
 import os
 import yaml
+import numpy as np
 
 from config.constants import ROOT
 from visualization.utils import parse_model_info, MODALITY_LIST, MODALITY_PALETTE, MODEL_LIST
@@ -76,8 +77,21 @@ def load_all_stats():
                     target_list.append(df)
 
             append_data(data.get('dilemma_stats'), all_dilemma_stats)
-            append_data(data.get('global_stats'), all_global_stats)
+            # append_data(data.get('global_stats'), all_global_stats)
             append_data(data.get('slopes'), all_slopes)
+
+            # [修改] 提取 Global Stats 时，同时将 global_fit 的数据分配进 DataFrame 中
+            global_stats_list = data.get('global_stats')
+            if global_stats_list:
+                df_global_tmp = pd.DataFrame(global_stats_list)
+                df_global_tmp['Model'] = model_name
+                df_global_tmp['Modality'] = modality
+                
+                fit_data = data.get('global_fit', {})
+                df_global_tmp['max_slope'] = fit_data.get('max_slope', np.nan)
+                df_global_tmp['fit_R2'] = fit_data.get('R2', np.nan)
+                
+                all_global_stats.append(df_global_tmp)
 
             data_info = data.get('data_info', {})
             refusal_rate = data_info.get('refusal_rate', 0.0) * 100
@@ -250,6 +264,152 @@ def plot_global_curve_by_model(df, output_dir):
     sns.set_context("notebook")
     print(f"Saved {save_path}")
 
+def plot_global_curve_by_model_fit(df, output_dir):
+    """
+    [Figure 1] Global Curve - Faceted by Model.
+    """
+    if df.empty: return
+
+    sns.set_context("talk", font_scale=1.2) 
+    
+    df = df.sort_values('Log_Ratio')
+    unique_models = set(df['Model'].unique())
+    model_order = get_model_order(unique_models)
+    
+    n_models = len(model_order)
+    # n_cols = n_models // 2 if n_models > 2 else 3
+    n_cols = n_models
+
+    hue_kws = {
+        'linewidth': [10, 8, 8],           
+        'linestyle': ['-', '-', '--'],    
+        'alpha': [0.5, 1.0, 1.0]
+    }
+
+    g = sns.FacetGrid(
+        df, 
+        col="Model", 
+        col_wrap=n_cols, 
+        col_order=model_order,
+        hue="Modality", 
+        hue_order=MODALITY_LIST,
+        hue_kws=hue_kws,
+        sharey=True, 
+        height=3.5,
+        aspect=1.2,
+        palette=MODALITY_PALETTE
+    )
+    
+    g.map(sns.lineplot, "Log_Ratio", "Action", marker="o", markersize=15)
+    
+    g.map(plt.axvline, x=0, linestyle=':', color='gray', alpha=0.5, linewidth=4)
+    
+    ticks_to_use = sorted(df['Log_Ratio'].unique())
+    labels_to_use = []
+    for val in ticks_to_use:
+        ratio_val = 10**val
+        if ratio_val < 0.99:
+            labels_to_use.append(f"1:{int(round(1/ratio_val))}")
+        else:
+            labels_to_use.append(f"{int(round(ratio_val))}:1")
+    
+    g.set(xticks=ticks_to_use)
+    
+    g.set_xticklabels(labels_to_use, rotation=45, ha='center', fontsize=20)
+    
+    g.set_titles("{col_name}", size=26, fontweight='bold')
+    
+    g.set(xlim=(min(ticks_to_use)-0.2, max(ticks_to_use)+0.2))
+    
+    g.set_axis_labels("Ratio (Saved : Sacrificed)", "Action Probability", fontsize=20)
+
+    g.set(ylim=(-0.02, 1.05))
+
+    g.fig.subplots_adjust(wspace=0.05, hspace=0.85)
+
+    # 增大y轴标签和刻度大小
+    for ax in g.axes:
+        ax.tick_params(axis='y', labelsize=20)  # 增大y轴刻度标签大小
+        ax.set_ylabel(ax.get_ylabel(), fontsize=22)  # 增大y轴标题大小
+        ax.yaxis.set_label_coords(-0.18, 0.45)
+        
+        ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
+        ax.yaxis.get_offset_text().set_visible(False)
+        ax.ticklabel_format(style='plain', axis='y', useOffset=False)
+
+        ax.tick_params(right=False, labelright=False)
+
+        # [调整] 将底部共用的 x 轴大标题向下推，避免和新增的文字重叠
+        # if ax.get_xlabel():
+        #     ax.set_xlabel(ax.get_xlabel(), labelpad=65)
+
+    # [新增] 在子图下方追加彩色文本行
+    for i, (ax, model_name) in enumerate(zip(g.axes.flat, model_order)):
+        model_df = df[df['Model'] == model_name]
+        
+        # y轴相对起始点：从 x轴标签 之下开始
+        row_idx = i // n_cols
+        if row_idx == 0:
+            y_text_pos = -0.64   # 第一排： closer
+        else:
+            y_text_pos = -0.4
+        
+        for mod in MODALITY_LIST:
+            mod_df = model_df[model_df['Modality'] == mod]
+            if not mod_df.empty:
+                m_slope = mod_df['max_slope'].iloc[0]
+                r2_val = mod_df['fit_R2'].iloc[0]
+                
+                if pd.notna(m_slope):
+                    color = MODALITY_PALETTE.get(mod, 'black')
+                    # text_str = f"{mod}: $S_{{max}}$={m_slope:.4f} ($R^2$={r2_val:.4f})"
+                    text_str = f"$S_{{max}}$={m_slope:.4f} ($R^2$={r2_val:.4f})"
+                    
+                    # 绘制带颜色的文本
+                    ax.text(0.5, y_text_pos, text_str, 
+                            transform=ax.transAxes, 
+                            fontsize=18, 
+                            color=color,
+                            ha='center',
+                            va='top', 
+                            fontweight='bold')
+                    
+                    # 为下一行文本下移留出高度
+                    y_text_pos -= 0.15
+    
+    target_ax_idx = n_cols - 1
+    if target_ax_idx < len(g.axes):
+        target_ax = g.axes[target_ax_idx]
+        
+        legend_elements = [
+            Line2D([0], [0], color=MODALITY_PALETTE['Text'], lw=8, linestyle='-', alpha=0.5, label='Text'),
+            Line2D([0], [0], color=MODALITY_PALETTE['Caption'], lw=6, linestyle='-', label='Caption'),
+            Line2D([0], [0], color=MODALITY_PALETTE['Image'], lw=6, linestyle='--', label='Image'),
+        ]
+        
+        target_ax.legend(
+            handles=legend_elements, 
+            title="Mode", 
+            loc='upper right', 
+            fontsize=20, 
+            title_fontsize=22, 
+            frameon=True,
+            handlelength=3
+        )
+    
+    # save_path = os.path.join(output_dir, "1_global_curve_by_model.pdf")
+    save_path = os.path.join(output_dir, "1_global_curve_by_model_fit.pdf")
+    plt.savefig(save_path, bbox_inches='tight', dpi=300)
+    # save_path = os.path.join(output_dir, "1_global_curve_by_model.png")
+    save_path = os.path.join(output_dir, "1_global_curve_by_model_fit.png")
+    plt.savefig(save_path, bbox_inches='tight', dpi=300)
+    plt.close()
+    
+    # 恢复默认设置 (可选，避免影响后续画图)
+    sns.set_context("notebook")
+    print(f"Saved {save_path}")
+
+
 def plot_dilemma_breakdown_per_model(df, output_dir):
     """
     [Figure 2] Dilemma Breakdown - One File per Model.
@@ -374,7 +534,8 @@ def main():
 
     # 2. Generate Plots
     # plot_refusal_rate_comparison(df_refusal, viz_dir)
-    plot_global_curve_by_model(df_global, viz_dir)
+    # plot_global_curve_by_model(df_global, viz_dir)
+    plot_global_curve_by_model_fit(df_global, viz_dir)
     # plot_dilemma_breakdown_per_model(df_dilemma, viz_dir)
     plot_sensitivity_slope_comparison(df_slope, viz_dir)
     
