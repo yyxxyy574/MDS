@@ -157,18 +157,33 @@ def run_ml_pipeline(df, model_name, model):
 
 def save_results(X_test, shap_interaction_values, save_dir, model_name_arg, mode, classifier_name, train_acc, test_acc):
     # shap_interaction_values shape: (N_samples, M_features, M_features)
+
+    # ================= Bootstrap =================
+    n_samples, n_features, _ = shap_interaction_values.shape
+    n_bootstraps = 1000
     
-    # 1. Calculate Mean Absolute Importance Matrix (Global Importance)
-    mean_abs_interaction = np.abs(shap_interaction_values).mean(axis=0) # Shape (M, M)
-    total_importance = np.sum(mean_abs_interaction) # Sum of all cells
+    abs_shap_vals = np.abs(shap_interaction_values)
     
+    bootstrapped_means = np.zeros((n_bootstraps, n_features, n_features))
+    
+    print(f"      Running Bootstrap resampling ({n_bootstraps} iterations) for Confidence Intervals...")
+    np.random.seed(42) 
+    for b in range(n_bootstraps):
+        sample_indices = np.random.choice(n_samples, size=n_samples, replace=True)
+        bootstrapped_means[b] = abs_shap_vals[sample_indices].mean(axis=0)
+        
+    mean_abs_interaction = abs_shap_vals.mean(axis=0) # Shape (M, M)
+    total_importance = np.sum(mean_abs_interaction) 
+    
+    lower_bound = np.percentile(bootstrapped_means, 2.5, axis=0)
+    upper_bound = np.percentile(bootstrapped_means, 97.5, axis=0)
+    # ==============================================================
+
     feature_names = X_test.columns.tolist()
-    n_features = len(feature_names)
     
-    # Debug print to verify shapes matching
     if mean_abs_interaction.shape[0] != n_features:
         print(f"      ❌ Critical Error: SHAP matrix shape {mean_abs_interaction.shape} does not match feature count {n_features}")
-        return pd.DataFrame() # Return empty to safely skip
+        return pd.DataFrame() 
 
     rows = []
     
@@ -177,11 +192,12 @@ def save_results(X_test, shap_interaction_values, save_dir, model_name_arg, mode
         feat_name = feature_names[i]
         importance = mean_abs_interaction[i, i]
         
-        # Calculate direction for Main Effects
+        ci_lower = lower_bound[i, i]
+        ci_upper = upper_bound[i, i]
+        
         raw_vals = shap_interaction_values[:, i, i]
         feature_vals = X_test.iloc[:, i].values
         
-        # Simple correlation to determine direction for main effects
         if np.std(feature_vals) == 0 or np.std(raw_vals) == 0:
             impact_code = "Unknown"
         else:
@@ -194,6 +210,9 @@ def save_results(X_test, shap_interaction_values, save_dir, model_name_arg, mode
             "Feature": feat_name,
             "Type": "Main Effect",
             "Importance": importance,
+            "CI_Lower": ci_lower,      
+            "CI_Upper": ci_upper,      
+            "Error_Margin": (ci_upper - ci_lower) / 2,
             "Direction": direction_str,
             "Impact_Code": impact_code,
             "Component_A": feat_name,
@@ -205,6 +224,8 @@ def save_results(X_test, shap_interaction_values, save_dir, model_name_arg, mode
         for j in range(i + 1, n_features):
             # Combined importance of i-j and j-i
             importance = mean_abs_interaction[i, j] * 2 
+            ci_lower = lower_bound[i, j] * 2
+            ci_upper = upper_bound[i, j] * 2
             
             if importance < 1e-6:
                 continue
@@ -213,7 +234,6 @@ def save_results(X_test, shap_interaction_values, save_dir, model_name_arg, mode
             feat_j = feature_names[j]
             interaction_name = f"{feat_i} & {feat_j}"
             
-            # Determine direction for Interactions
             raw_vals = shap_interaction_values[:, i, j]
             avg_val = np.mean(raw_vals) * 2
             impact_code = "POS" if avg_val > 0 else "NEG"
@@ -223,6 +243,9 @@ def save_results(X_test, shap_interaction_values, save_dir, model_name_arg, mode
                 "Feature": interaction_name,
                 "Type": "Interaction",
                 "Importance": importance,
+                "CI_Lower": ci_lower,  
+                "CI_Upper": ci_upper, 
+                "Error_Margin": (ci_upper - ci_lower) / 2, 
                 "Direction": direction_str,
                 "Impact_Code": impact_code,
                 "Component_A": feat_i,
@@ -514,6 +537,55 @@ def process_single_task(model_name, mode, input_path, out_dir):
     except Exception as e:
         print(f"❌ Error processing {model_name}/{mode}: {e}")
         return None
+    
+def process_saved_task(model_name, mode, out_dir):
+    print("\n" + "=" * 80)
+    print(f"Recomputing CI for: {model_name} / {mode}")
+    print("=" * 80)
+    
+    if not os.path.exists(out_dir):
+        print(f"⚠️  Skipping: Directory not found - {out_dir}")
+        return False
+        
+    test_data_path = os.path.join(out_dir, f"test_data_{model_name}_{mode}.joblib")
+    if not os.path.exists(test_data_path):
+        print(f"⚠️  Skipping: Test data not found: {test_data_path}")
+        return False
+        
+    print(f"   Loading test data from {os.path.basename(test_data_path)}...")
+    test_data = joblib.load(test_data_path)
+    X_test = test_data['X_test']
+
+    npy_pattern = os.path.join(out_dir, f"shap_interactions_{model_name}_{mode}_*.npy")
+    npy_files = glob.glob(npy_pattern)
+    
+    if not npy_files:
+        print(f"⚠️  Skipping: No saved SHAP .npy files found in {out_dir}")
+        return False
+        
+    print(f"   Found {len(npy_files)} SHAP matrix files. Starting Bootstrap...")
+    
+    for npy_path in npy_files:
+        base_name = os.path.basename(npy_path)
+        prefix = f"shap_interactions_{model_name}_{mode}_"
+        classifier_name = base_name.replace(prefix, "").replace(".npy", "")
+        
+        print(f"\n   -> Recomputing CI for: {classifier_name}")
+        shap_interaction_values = np.load(npy_path)
+        
+        try:
+            save_results(
+                X_test, shap_interaction_values, out_dir, 
+                model_name, mode, classifier_name,
+                train_acc=0.0, test_acc=0.0
+            )
+            print(f"      ✓ Updated CSV/HTML generated successfully.")
+        except Exception as e:
+            print(f"      ❌ Error during recomputation: {e}")
+            import traceback
+            traceback.print_exc()
+            
+    return True
 
 def get_all_tasks():
     results_dir = f"{ROOT}/../results/interaction"
@@ -544,151 +616,98 @@ def main():
                        help="Model name or 'all' to process all models")
     parser.add_argument('--mode', type=str, default='text', 
                        help="Mode: 'text', 'image', 'caption', or 'all' to process all modes")
+    parser.add_argument('--recompute-ci', action='store_true',
+                       help="Skip training, load saved .npy and .joblib files to compute Bootstrap CI")
     
     args = parser.parse_args()
     
     total_start_time = time.time()
     
     print("=" * 80)
-    print("Feature Interaction Analysis - Multi-Model Comparison (Native SHAP)")
+    if args.recompute_ci:
+        print("Feature Interaction Analysis - RECOMPUTING CONFIDENCE INTERVALS (Offline)")
+    else:
+        print("Feature Interaction Analysis - Multi-Model Comparison (Native SHAP)")
     print("=" * 80)
 
     input_root = f"{ROOT}/../results/interaction"
-    output_root = f"{ROOT}/../results/interaction/analyze_results"
+    output_root = f"{ROOT}/../results/interaction/analyze_results_implicit"
     
     if args.model_name.lower() == 'all' and args.mode.lower() == 'all':
         print("\n🔍 Scanning all available models and modes...")
-        
         tasks = get_all_tasks()
-        
-        if not tasks:
-            print("❌ No tasks found in results_interaction directory")
-            return
-        
+        if not tasks: return
         print(f"📋 Found {len(tasks)} tasks to process")
         
-        success_count = 0
-        fail_count = 0
-        
+        success_count, fail_count = 0, 0
         for idx, (model_name, mode, input_path) in enumerate(tasks, 1):
             print(f"\n[{idx}/{len(tasks)}] Processing: {model_name} / {mode}")
+            out_dir = f"{output_root}/{model_name}/{mode}"
             
-            out_dir = f"{input_root}/{model_name}/{mode}"
-            result = process_single_task(model_name, mode, input_path, out_dir)
-            
-            if result:
-                success_count += 1
+            if args.recompute_ci:
+                result = process_saved_task(model_name, mode, out_dir)
             else:
-                fail_count += 1
-        
+                result = process_single_task(model_name, mode, input_path, out_dir)
+                
+            if result: success_count += 1
+            else: fail_count += 1
+            
         elapsed = time.time() - total_start_time
-        print("\n" + "=" * 80)
-        print(f"✓ Batch processing completed!")
-        print(f"   Total tasks: {len(tasks)}")
-        print(f"   Successful: {success_count}")
-        print(f"   Failed/Skipped: {fail_count}")
-        print(f"   Total time: {elapsed:.2f} seconds")
-        print("=" * 80)
+        print(f"\n✓ Batch processing completed! Total time: {elapsed:.2f} seconds")
         
     elif args.model_name.lower() == 'all':
         print(f"\n🔍 Processing all models for mode: {args.mode}")
-        
         results_dir = input_root
+        if not os.path.exists(results_dir): return
+        models = [d for d in os.listdir(results_dir) if os.path.isdir(os.path.join(results_dir, d))]
         
-        if not os.path.exists(results_dir):
-            print(f"❌ Error: {results_dir} not found")
-            return
-        
-        models = [d for d in os.listdir(results_dir) 
-                 if os.path.isdir(os.path.join(results_dir, d))]
-        
-        if not models:
-            print("❌ No model directories found")
-            return
-        
-        print(f"📋 Found {len(models)} models to process")
-        
-        success_count = 0
-        fail_count = 0
-        
+        success_count, fail_count = 0, 0
         for idx, model_name in enumerate(models, 1):
-            print(f"\n[{idx}/{len(models)}] Processing: {model_name}")
-            
-            input_path = f"{input_root}/{model_name}/results_{args.mode}.yaml"
             out_dir = f"{output_root}/{model_name}/{args.mode}"
+            input_path = f"{input_root}/{model_name}/results_{args.mode}.yaml"
             
-            result = process_single_task(model_name, args.mode, input_path, out_dir)
-            
-            if result:
-                success_count += 1
+            if args.recompute_ci:
+                result = process_saved_task(model_name, args.mode, out_dir)
             else:
-                fail_count += 1
-        
+                result = process_single_task(model_name, args.mode, input_path, out_dir)
+                
+            if result: success_count += 1
+            else: fail_count += 1
+            
         elapsed = time.time() - total_start_time
-        print("\n" + "=" * 80)
-        print(f"✓ Batch processing completed!")
-        print(f"   Total models: {len(models)}")
-        print(f"   Successful: {success_count}")
-        print(f"   Failed/Skipped: {fail_count}")
-        print(f"   Total time: {elapsed:.2f} seconds")
-        print("=" * 80)
+        print(f"\n✓ Batch processing completed! Total time: {elapsed:.2f} seconds")
         
     elif args.mode.lower() == 'all':
         print(f"\n🔍 Processing all modes for model: {args.model_name}")
-        
         model_dir = f"{input_root}/{args.model_name}"
-        
-        if not os.path.exists(model_dir):
-            print(f"❌ Error: Model directory not found - {model_dir}")
-            return
-        
+        if not os.path.exists(model_dir): return
         yaml_files = glob.glob(os.path.join(model_dir, "results_*.yaml"))
+        modes = [os.path.basename(f).replace("results_", "").replace(".yaml", "") for f in yaml_files]
         
-        if not yaml_files:
-            print(f"❌ No YAML files found in {model_dir}")
-            return
-        
-        modes = [os.path.basename(f).replace("results_", "").replace(".yaml", "") 
-                for f in yaml_files]
-        
-        print(f"📋 Found {len(modes)} modes to process: {', '.join(modes)}")
-        
-        success_count = 0
-        fail_count = 0
-        
+        success_count, fail_count = 0, 0
         for idx, mode in enumerate(modes, 1):
-            print(f"\n[{idx}/{len(modes)}] Processing: {mode}")
-            
-            input_path = f"{input_root}/{args.model_name}/results_{mode}.yaml"
             out_dir = f"{output_root}/{args.model_name}/{mode}"
+            input_path = f"{input_root}/{args.model_name}/results_{mode}.yaml"
             
-            result = process_single_task(args.model_name, mode, input_path, out_dir)
-            
-            if result:
-                success_count += 1
+            if args.recompute_ci:
+                result = process_saved_task(args.model_name, mode, out_dir)
             else:
-                fail_count += 1
-        
+                result = process_single_task(args.model_name, mode, input_path, out_dir)
+                
+            if result: success_count += 1
+            else: fail_count += 1
+            
         elapsed = time.time() - total_start_time
-        print("\n" + "=" * 80)
-        print(f"✓ Batch processing completed!")
-        print(f"   Total modes: {len(modes)}")
-        print(f"   Successful: {success_count}")
-        print(f"   Failed/Skipped: {fail_count}")
-        print(f"   Total time: {elapsed:.2f} seconds")
-        print("=" * 80)
+        print(f"\n✓ Batch processing completed! Total time: {elapsed:.2f} seconds")
         
     else:
-        input_path = f"{input_root}/{args.model_name}/results_{args.mode}.yaml"
         out_dir = f"{output_root}/{args.model_name}/{args.mode}"
+        input_path = f"{input_root}/{args.model_name}/results_{args.mode}.yaml"
         
-        result = process_single_task(args.model_name, args.mode, input_path, out_dir)
-        
-        if result:
-            elapsed = time.time() - total_start_time
-            print(f"\n✓ Analysis completed in {elapsed:.2f} seconds")
+        if args.recompute_ci:
+            result = process_saved_task(args.model_name, args.mode, out_dir)
         else:
-            print("\n❌ Analysis failed or skipped")
+            result = process_single_task(args.model_name, args.mode, input_path, out_dir)
 
 if __name__ == '__main__':
     main()
