@@ -314,7 +314,7 @@ def plot_scheme_a_bias_fingerprint(data_map, save_dir):
             linewidth=0.5,
             yerr=df_error, 
             capsize=0,
-            error_kw={'elinewidth': 1.2, 'ecolor': 'black', 'alpha': 0.8}
+            error_kw={'elinewidth': 15, 'ecolor': 'black', 'alpha': 0.8}
         )
         
         ax.set_title(f"{model_name}", fontsize=20, fontweight='bold', pad=6)
@@ -435,11 +435,11 @@ def plot_scheme_b_bidirectional(df, save_dir):
             
             ax.bar(x + offset, vals_amp, width=bar_width, label=mode if row_idx==0 else "",
                    color=MODALITY_PALETTE[mode], edgecolor='black', linewidth=0.5, alpha=0.9,
-                   yerr=err_amp, capsize=0, error_kw={'elinewidth': 1.5, 'ecolor': 'black'})
+                   yerr=err_amp, capsize=0, error_kw={'elinewidth': 5, 'ecolor': 'black'})
                    
             ax.bar(x + offset, vals_corr, width=bar_width, 
                    color=MODALITY_PALETTE[mode], edgecolor='black', linewidth=0.5, alpha=0.5, hatch='///',
-                   yerr=err_corr, capsize=0, error_kw={'elinewidth': 1.5, 'ecolor': 'black'})
+                   yerr=err_corr, capsize=0, error_kw={'elinewidth': 5, 'ecolor': 'black'})
 
         ax.axhline(0, color='black', linewidth=0.8)
         
